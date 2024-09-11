@@ -9,10 +9,9 @@
 }
 
 .navbar_container img   {
-    width: 100px;
-    height: 100%;
+    width: 60px;
+    height: auto;
     margin-left: 10px;
-    background-color: black;
 }
 
 .navbar_container ul    {
