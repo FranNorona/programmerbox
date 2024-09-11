@@ -4,7 +4,7 @@ import { db } from "../../firebaseConfig";
 import { TextField, Button } from "@mui/material";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import IconButton from '@mui/material/IconButton';
+import IconButton from "@mui/material/IconButton";
 import * as Yup from "yup";
 import * as React from "react";
 import "./form.css";
@@ -153,32 +153,47 @@ const FormComponent = () => {
 
             <div>
                 <h2>Datos Ingresados</h2>
-                <ul>
-                    {data.length > 0 ? (
-                        data.map((item) => (
-                            <div className="listpend_container" key={item.id}>
-                                <li>
-                                    <p>Código: {item.code}</p>
-                                    <p>Proveedor: {item.description}</p>
-                                    <p>Fecha Solicitada: {item.dateAnnoun}</p>
-                                    <p>Fecha Requerida: {item.dateRequest}</p>
-                                    <p>Comentarios: {item.comments}</p>
-                                    <IconButton
-                                        color="success"
+                <div className="listpend_container">
+                    <div className="listpend_header">
+                        <div className="listpend_item listpend_header_item">Código</div>
+                        <div className="listpend_item listpend_header_item">Proveedor</div>
+                        <div className="listpend_item listpend_header_item">Fecha Solicitada</div>
+                        <div className="listpend_item listpend_header_item">Fecha Requerida</div>
+                        <div className="listpend_item listpend_header_item">Comentario</div>
+                        <div className="listpend_item listpend_header_item">Acciones</div>
+                    </div>
+                    <div className="listpend_body">
+                        {data.length > 0 ? (
+                            data.map((item) => (
+                                <div className="listpend_row" key={item.id}>
+                                    <div className="listpend_item">{item.code}</div>
+                                    <div className="listpend_item">{item.description}</div>
+                                    <div className="listpend_item">{item.dateAnnoun}</div>
+                                    <div className="listpend_item">{item.dateRequest}</div>
+                                    <div className="listpend_item">{item.comments}</div>
+                                    <div className="listpend_item">
+                                        <IconButton
+                                            color="success"
                                             onClick={() => handleDelete(item.id)}
-                                    >
-                                        <CheckCircleIcon />
-                                    </IconButton>
-                                </li>
+                                        >
+                                            <CheckCircleIcon />
+                                        </IconButton>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="listpend_row">
+                                <div className="listpend_item listpend_container_p" colSpan="6">
+                                    No hay datos disponibles
+                                </div>
                             </div>
-                        ))
-                    ) : (
-                        <p className="listpend_container_p">No hay datos disponibles</p>
-                    )}
-                </ul>
+                        )}
+                    </div>
+                </div>
             </div>
         </>
     );
 };
 
 export default FormComponent;
+

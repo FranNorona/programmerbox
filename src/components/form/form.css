@@ -1,4 +1,4 @@
-h1  {
+h1 {
     padding: 10px;
     padding-bottom: 50px;
     text-align: center;
@@ -10,7 +10,7 @@ h2 {
     text-align: center;
 }
 
-.form_global    {
+.form_global {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,25 +37,46 @@ h2 {
 
 .listpend_container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     width: 100vw;
-    height: 60px;
 }
 
-.listpend_container li {
+.listpend_header {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 95%;
-    height: 90%;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-bottom: 2px solid gray;
+    font-weight: bold;
+}
+
+.listpend_body {
+    display: flex;
+    flex-direction: column;
+}
+
+.listpend_row {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
     padding: 5px;
-    list-style: none;
-    border: 2px solid gray;
-    border-radius: 15px;
+    border-bottom: 1px solid gray;
     background-color: lightgray;
 }
 
-.listpend_container_p   {
+.listpend_item {
+    width: 15%;
     text-align: center;
+}
+
+.listpend_header_item {
+    width: 15%;
+    margin-left: 4px;
+    text-align: center;
+}
+
+.listpend_container_p {
+    text-align: center;
+    width: 100%;
 }
