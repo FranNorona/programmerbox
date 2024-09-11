@@ -1,0 +1,56 @@
+h1, h2  {
+    padding: 10px;
+    text-align: center;
+}
+
+h1  {
+    padding-bottom: 50px;
+}
+
+.form_global    {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: auto;
+    padding: 10px;
+    background-color: aqua;
+}
+
+.addButton {
+    padding-bottom: 20px;
+}
+
+.form_container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.listpend_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 60px;
+}
+
+.listpend_container li {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 95%;
+    height: 90%;
+    padding: 5px;
+    list-style: none;
+    border: 2px solid #1976D2;
+    border-radius: 15px;
+}
+
+.listpend_container_p   {
+    text-align: center;
+}

@@ -1,0 +1,34 @@
+.navbar_container   {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    height: 80px;
+    padding: 10px;
+}
+
+.navbar_container img   {
+    width: 100px;
+    height: 100%;
+    margin-left: 10px;
+    background-color: black;
+}
+
+.navbar_container ul    {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    list-style: none;
+}
+
+.navbar_container ul li {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    text-align: center;
+}
