@@ -140,7 +140,7 @@ const FormComponent = () => {
                                 <Button
                                     type="submit"
                                     variant="contained"
-                                    color="primary"
+                                    color="inherit"
                                     disabled={isSubmitting}
                                 >
                                     Agregar
@@ -164,7 +164,7 @@ const FormComponent = () => {
                                     <p>Fecha Requerida: {item.dateRequest}</p>
                                     <p>Comentarios: {item.comments}</p>
                                     <IconButton
-                                        color="secondary"
+                                        color="success"
                                             onClick={() => handleDelete(item.id)}
                                     >
                                         <CheckCircleIcon />

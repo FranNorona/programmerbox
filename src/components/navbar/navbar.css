@@ -5,6 +5,7 @@
     width: 100vw;
     height: 80px;
     padding: 10px;
+    box-shadow: 0px 4px 5px grey;
 }
 
 .navbar_container img   {
