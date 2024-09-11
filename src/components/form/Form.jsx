@@ -155,7 +155,7 @@ const FormComponent = () => {
                 <h2>Datos Ingresados</h2>
                 <div className="listpend_container">
                     <div className="listpend_header">
-                        <div className="listpend_item listpend_header_item">Código</div>
+                        <div className="listpend_item listpend_header_item_2">Código</div>
                         <div className="listpend_item listpend_header_item">Proveedor</div>
                         <div className="listpend_item listpend_header_item">Fecha Solicitada</div>
                         <div className="listpend_item listpend_header_item">Fecha Requerida</div>

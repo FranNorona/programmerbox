@@ -76,6 +76,12 @@ h2 {
     text-align: center;
 }
 
+.listpend_item listpend_header_item_2 {
+    width: 20%;
+    margin-left: 5px;
+    text-align: center;
+}
+
 .listpend_container_p {
     text-align: center;
     width: 100%;
