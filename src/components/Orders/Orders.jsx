@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import { addDoc, getDocs, deleteDoc, doc, collection } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Box } from "@mui/material";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { format } from "date-fns";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import IconButton from "@mui/material/IconButton";
 import * as Yup from "yup";
-import "./form.css";
+import "./orders.css";
 
 // Validación con Yup
 const validationSchema = Yup.object({
-    code: Yup.string().required("Código es obligatorio"),
+    code: Yup.number().required("Código es obligatorio"),
     description: Yup.string().required("Descripción es obligatoria"),
     provider: Yup.string().required("Proveedor es obligatorio"),
     dateAnnoun: Yup.date().required("Fecha Solicitada es obligatoria").nullable(),
@@ -35,7 +35,7 @@ const CustomTextField = ({ label, form, field, ...props }) => {
     );
 };
 
-const FormComponent = () => {
+const Orders = () => {
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -87,14 +87,14 @@ const FormComponent = () => {
     return (
         <>
             <div className="form_global">
-                <h1>Ingresar Datos</h1>
+                <h1>Ingresar Datos del Pedido</h1>
                 <Formik
                     initialValues={{
                         code: '',
                         description: '',
                         provider: '',
-                        dateAnnoun: '', // Cambiado a cadena vacía
-                        dateRequest: '', // Cambiado a cadena vacía
+                        dateAnnoun: '', 
+                        dateRequest: '', 
                         comments: ''
                     }}
                     validationSchema={validationSchema}
@@ -102,31 +102,33 @@ const FormComponent = () => {
                 >
                     {({ isSubmitting }) => (
                         <Form className="form_container">
-                            <div>
+                            <Box sx={{ width: '12.5%', maxWidth: '100%' }}>
                                 <Field
                                     name="code"
                                     label="Código"
                                     component={CustomTextField}
                                     variant="outlined"
+                                    type="number"
+                                    fullWidth
                                 />
-                            </div>
-                            <div>
+                            </Box>
+                            <Box sx={{ width: '13%', maxWidth: '100%' }}>
                                 <Field
                                     name="description"
                                     label="Descripción"
                                     component={CustomTextField}
                                     variant="outlined"
                                 />
-                            </div>
-                            <div>
+                            </Box>
+                            <Box sx={{ width: '13%', maxWidth: '100%' }}>
                                 <Field
                                     name="provider"
                                     label="Proveedor"
                                     component={CustomTextField}
                                     variant="outlined"
                                 />
-                            </div>
-                            <div>
+                            </Box>
+                            <Box sx={{ width: '14.5%', maxWidth: '100%' }}>
                                 <Field
                                     name="dateAnnoun"
                                     label="Fecha Solicitada"
@@ -135,8 +137,8 @@ const FormComponent = () => {
                                     variant="outlined"
                                     InputLabelProps={{ shrink: true }}
                                 />
-                            </div>
-                            <div>
+                            </Box>
+                            <Box sx={{ width: '14.5%', maxWidth: '100%' }}>
                                 <Field
                                     name="dateRequest"
                                     label="Fecha Requerida"
@@ -145,15 +147,15 @@ const FormComponent = () => {
                                     variant="outlined"
                                     InputLabelProps={{ shrink: true }}
                                 />
-                            </div>
-                            <div>
+                            </Box>
+                            <Box sx={{ width: '15%', maxWidth: '100%' }}>
                                 <Field
                                     name="comments"
                                     label="Comentario"
                                     component={CustomTextField}
                                     variant="outlined"
                                 />
-                            </div>
+                            </Box>
                             <div className="addButton">
                                 <Button
                                     type="submit"
@@ -172,7 +174,7 @@ const FormComponent = () => {
             <div>
                 <TextField
                     label="Buscar"
-                    variant="outlined"
+                    variant="filled"
                     fullWidth
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -180,7 +182,7 @@ const FormComponent = () => {
             </div>  
 
             <div>
-                <h2>Datos Ingresados</h2>
+                <h2>Pedidos Solicitados</h2>
                 <div className="listpend_container">
                     <div className="listpend_header">
                         <div className="listpend_item listpend_header_item_2">Código</div>
@@ -189,7 +191,7 @@ const FormComponent = () => {
                         <div className="listpend_item listpend_header_item">Fecha Solicitada</div>
                         <div className="listpend_item listpend_header_item">Fecha Requerida</div>
                         <div className="listpend_item listpend_header_item">Comentario</div>
-                        <div className="listpend_item listpend_header_item">Acciones</div>
+                        <div className="listpend_item listpend_header_item">Ingreso</div>
                     </div>
                     <div className="listpend_body">
                         {filteredData.length > 0 ? (
@@ -225,4 +227,4 @@ const FormComponent = () => {
     );
 };
 
-export default FormComponent;
+export default Orders;

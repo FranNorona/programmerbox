@@ -1,9 +1,9 @@
-import Form from "../../components/form/Form";
+import Orders from "../../components/Orders/Orders";
 
 const Landing = () => {
     return  (
         <>
-            <Form />
+            <Orders />
         </>
     )
 }

@@ -5,7 +5,7 @@ const Navbar = () => {
         <div className="navbar_container">
             <img src="https://res.cloudinary.com/dmhprmqnk/image/upload/v1726067335/logop_smiqmt.png" alt="logo" />
             <ul>
-                <li>Pedidos</li>
+                <li>Pedidos(R:ORDERS)</li> 
                 <li>Cuarentena</li>
                 <li>Exportaciones</li>
             </ul>
