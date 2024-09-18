@@ -5,16 +5,12 @@ import Login from "../../components/login/Login";
 const Landing = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const handleLogin = (username, password) => {
-        e.preventDefault();
-        console.log("Intentando iniciar sesión...");
-    
+    const handleLogin = (username, password) => {    
         if (
             (username === import.meta.env.VITE_USER_1 && password === import.meta.env.VITE_PW_USER_1) || 
             (username === import.meta.env.VITE_USER_2 && password === import.meta.env.VITE_PW_USER_2)
         ) {
             setIsAuthenticated(true);
-            console.log("Inicio de sesión exitoso");
         } else {
             alert('Credenciales incorrectas');
         }
