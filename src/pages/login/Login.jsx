@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Box } from '@mui/material';
 import "./login.css";
 
 const Login = ({ onLogin }) => {
@@ -20,6 +20,7 @@ const Login = ({ onLogin }) => {
 
     return (
         <div className='form_login_container'>
+            <img src="https://res.cloudinary.com/dmhprmqnk/image/upload/v1726067335/logop_smiqmt.png" alt="logo" />
             <form className="form_login" onSubmit={handleSubmit}>
                 <TextField
                     label="Usuario"
@@ -36,7 +37,9 @@ const Login = ({ onLogin }) => {
                     required
                     autoComplete="current-password"
                 />
-                <Button type="submit" variant="contained">Iniciar Sesión</Button>
+                <Box sx={{ backgroundColor: '#58bc82', borderRadius: '4px' }}>
+                    <Button type="submit" variant="contained" color="transparent">Iniciar Sesión</Button>
+                </Box>
             </form>
         </div>
     );

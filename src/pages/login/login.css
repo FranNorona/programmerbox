@@ -1,16 +1,39 @@
 .form_login_container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
   width: 100vw;
-  height: 50vh;
+  height: 90vh;
+}
+
+.form_login_container img {
+  width: 20%;
+  height: auto;
+  filter: drop-shadow(2px 1px 4px #000000);
+  animation: myAnim 20s ease-out 0s infinite forwards;
 }
 
 .form_login {
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
     gap: 1rem;
-    width: 100%;
+    width: 50%;
     max-width: 300px;
+    height: 400px;
+    padding: 10px;
+    border-radius: 15px;
+    border: 2px solid #58bc82;
+  }
+
+  @keyframes myAnim {
+    0% {
+      transform: rotate(0);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
   }
