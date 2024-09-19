@@ -78,7 +78,7 @@ const Orders = () => {
     };
 
     const filteredData = data.filter(item =>
-        (item.code && item.code.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (item.code && String(item.code).toLowerCase().includes(searchTerm.toLowerCase())) ||
         (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
         (item.provider && item.provider.toLowerCase().includes(searchTerm.toLowerCase())) ||
         (item.comments && item.comments.toLowerCase().includes(searchTerm.toLowerCase()))
