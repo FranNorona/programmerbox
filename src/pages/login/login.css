@@ -1,10 +1,21 @@
+h1 {
+  text-transform: uppercase;
+  font-size: 50px;
+  letter-spacing: 2px;
+  text-shadow: -1px 1px 3px rgba(0,0,0,0.64);
+  color: white;
+}
+
 .form_login_container {
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-end;
   width: 100vw;
-  height: 90vh;
+  height: 100vh;
+  background: url(https://res.cloudinary.com/dmhprmqnk/image/upload/v1726747361/3132795_orz0g0.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .form_login_container img {
@@ -21,11 +32,12 @@
     align-items: center;
     gap: 1rem;
     width: 50%;
-    max-width: 300px;
-    height: 400px;
-    padding: 10px;
-    border-radius: 15px;
-    border: 2px solid #58bc82;
+    height: 100%;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.9px);
+    -webkit-backdrop-filter: blur(7.9px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.09)
   }
 
   @keyframes myAnim {

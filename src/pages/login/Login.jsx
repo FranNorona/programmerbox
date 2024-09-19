@@ -20,14 +20,17 @@ const Login = ({ onLogin }) => {
 
     return (
         <div className='form_login_container'>
-            <img src="https://res.cloudinary.com/dmhprmqnk/image/upload/v1726067335/logop_smiqmt.png" alt="logo" />
+            
             <form className="form_login" onSubmit={handleSubmit}>
+                <h1>Bienvenido</h1>
+                <img src="https://res.cloudinary.com/dmhprmqnk/image/upload/v1726067335/logop_smiqmt.png" alt="logo" />
                 <TextField
                     label="Usuario"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
                     autoComplete="username"
+                    variant="standard"
                 />
                 <TextField
                     label="Contraseña"
@@ -36,8 +39,9 @@ const Login = ({ onLogin }) => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     autoComplete="current-password"
+                    variant="standard"
                 />
-                <Box sx={{ backgroundColor: '#58bc82', borderRadius: '4px' }}>
+                <Box sx={{ backgroundColor: 'black', borderRadius: '4px', color: 'white' }}>
                     <Button type="submit" variant="contained" color="transparent">Iniciar Sesión</Button>
                 </Box>
             </form>
