@@ -19,10 +19,8 @@ const Login = ({ onLogin }) => {
     };
 
     return (
-        <div className='form_login_container'>
-            
+        <div className='form_login_container'>   
             <form className="form_login" onSubmit={handleSubmit}>
-                <h1>Bienvenido</h1>
                 <img src="https://res.cloudinary.com/dmhprmqnk/image/upload/v1726067335/logop_smiqmt.png" alt="logo" />
                 <TextField
                     label="Usuario"
@@ -41,7 +39,7 @@ const Login = ({ onLogin }) => {
                     autoComplete="current-password"
                     variant="standard"
                 />
-                <Box sx={{ backgroundColor: 'black', borderRadius: '4px', color: 'white' }}>
+                <Box sx={{ backgroundColor: '#58bc82', borderRadius: '4px', color: 'white' }}>
                     <Button type="submit" variant="contained" color="transparent">Iniciar Sesión</Button>
                 </Box>
             </form>
