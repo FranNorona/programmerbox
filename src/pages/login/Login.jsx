@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate para redirección
 import "./login.css";
 
 const Login = ({ onLogin }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate(); // Hook para redireccionar
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -12,7 +14,8 @@ const Login = ({ onLogin }) => {
             (username === import.meta.env.VITE_USER_1 && password === import.meta.env.VITE_PW_USER_1) || 
             (username === import.meta.env.VITE_USER_2 && password === import.meta.env.VITE_PW_USER_2)
         ) {
-            onLogin(); // Llama a la función al iniciar sesión
+            onLogin(); // Actualiza el estado de autenticación en el App.js
+            navigate("/"); // Redirige a la página de Orders
         } else {
             alert('Credenciales incorrectas');
         }
