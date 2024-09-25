@@ -1,4 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
+import PowerSettingsNewOutlinedIcon from '@mui/icons-material/PowerSettingsNewOutlined';
+import IconButton from "@mui/material/IconButton";
 import "./navbar.css";
 
 const Navbar = ({ onLogout }) => {
@@ -20,7 +22,7 @@ const Navbar = ({ onLogout }) => {
                     <Link className="links_container" to="/granel">Graneles</Link>
                 </li>
                 <li>
-                    <button className="links_container" onClick={handleLogout}>Salir</button>
+                    <IconButton className="links_container" onClick={handleLogout}><PowerSettingsNewOutlinedIcon /></IconButton>
                 </li>
             </ul>
         </div>
