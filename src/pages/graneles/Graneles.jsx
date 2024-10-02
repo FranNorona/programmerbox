@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Box } from "@mui/material";
 import * as Yup from "yup";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
@@ -36,9 +36,8 @@ const CustomTextField = ({ label, form, field, ...props }) => {
 };
 
 const Graneles = () => {
-    const [granelesList, setGranelesList] = useState([]); // Estado para almacenar los graneles
+    const [granelesList, setGranelesList] = useState([]);
 
-    // Función para obtener los graneles de la base de datos
     const fetchGraneles = async () => {
         try {
             const querySnapshot = await getDocs(collection(db, "graneles"));
@@ -46,21 +45,19 @@ const Graneles = () => {
                 id: doc.id,
                 ...doc.data()
             }));
-            setGranelesList(granelesData); // Actualiza el estado con los datos obtenidos
+            setGranelesList(granelesData);
         } catch (error) {
             console.error("Error al obtener graneles: ", error);
         }
     };
 
-    // useEffect para cargar los graneles al montar el componente
     useEffect(() => {
         fetchGraneles();
     }, []);
 
-    // Función para manejar el envío del formulario
     const handleSubmit = async (values, { resetForm }) => {
         try {
-            // Añade los datos a la colección "graneles" en Firestore
+
             await addDoc(collection(db, "graneles"), {
                 code: values.code,
                 description: values.description,
@@ -73,9 +70,8 @@ const Graneles = () => {
                 comments: values.comments,
             });
 
-            // Después de agregar el nuevo granel, vuelve a obtener los graneles actualizados
             fetchGraneles();
-            resetForm(); // Resetea el formulario después de enviar
+            resetForm();
             console.log("Granel añadido correctamente");
         } catch (error) {
             console.error("Error añadiendo granel: ", error);
@@ -84,7 +80,7 @@ const Graneles = () => {
 
     return (
         <>
-            <div>
+            <div className="form_global_graneles">
                 <h1>Ingresar Graneles</h1>
                 <Formik
                     initialValues={{
@@ -101,25 +97,28 @@ const Graneles = () => {
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                 >
-                    <Form>
+                    <Form className="form_graneles_inputs">
                         <Field 
                             name="code"
                             label="Código"
                             component={CustomTextField}
                             variant="outlined"
                             type="number"
+                            className="form1"
                         />
                         <Field 
                             name="description"
                             label="Descripción"
                             component={CustomTextField}
                             variant="outlined"
+                            className="form2"
                         />
                         <Field 
                             name="lotes"
                             label="Lotes"
                             component={CustomTextField}
                             variant="outlined"
+                            className="form3"
                         />
                         <Field 
                             name="cuantity"
@@ -127,24 +126,28 @@ const Graneles = () => {
                             component={CustomTextField}
                             variant="outlined"
                             type="number"
+                            className="form4"
                         />
                         <Field 
                             name="state"
                             label="Estado"
                             component={CustomTextField}
                             variant="outlined"
+                            className="form5"
                         />
                         <Field 
                             name="lotesInStock"
                             label="Lotes en Stock"
                             component={CustomTextField}
                             variant="outlined"
+                            className="form6"
                         />
                         <Field 
                             name="toPacking"
                             label="Acondicionar"
                             component={CustomTextField}
                             variant="outlined"
+                            className="form7"
                         />
                         <Field 
                             name="cuantityPacking"
@@ -152,18 +155,21 @@ const Graneles = () => {
                             component={CustomTextField}
                             variant="outlined"
                             type="number"
+                            className="form8"
                         />
                         <Field 
                             name="comments"
                             label="Comentarios"
                             component={CustomTextField}
                             variant="outlined"
+                            className="comments"
                         />
                         <div className="addButton">
                             <Button
                                 type="submit"
                                 variant="contained"
                                 color="inherit"
+                                fullWidth
                             >
                                 Agregar
                             </Button>
@@ -172,15 +178,17 @@ const Graneles = () => {
                 </Formik>
             </div>
 
-            {/* Mostrar los graneles ingresados debajo del formulario */}
-            <div>
-                <h2>Graneles ingresados:</h2>
-                <div className="graneles-list">
+            <div className="cards_global_view">
+                <h2>Graneles ingresados</h2>
+                <div className="graneles_list">
                     {granelesList.map((granel) => (
-                        <div key={granel.id} className="granel-item">
-                            <Link to={`/graneles/${granel.id}`}>
+                        <div key={granel.id} className="granel_item">
+                            <Link to={`/graneles/${granel.id}`} className="granel_link">
                                 <p><strong>Código:</strong> {granel.code}</p>
                                 <p><strong>Descripción:</strong> {granel.description}</p>
+                                <p><strong>Lotes:</strong> {granel.lotes}</p>
+                                <p><strong>Cantidad:</strong> {granel.cuantity}</p>
+                                <p><strong>Estado:</strong> {granel.state}</p>
                             </Link>
                         </div>
                     ))}
