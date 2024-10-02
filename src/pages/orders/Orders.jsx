@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { addDoc, getDocs, deleteDoc, doc, collection } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import { TextField, Button, Box } from "@mui/material";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import { format } from "date-fns";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import IconButton from "@mui/material/IconButton";
@@ -58,9 +58,7 @@ const Orders = () => {
 
     const handleSubmit = async (values, { resetForm }) => {
         try {
-            console.log("Valores del formulario en handleSubmit:", values);
             const docRef = await addDoc(collection(db, "data"), values);
-            console.log("Documento añadido con ID:", docRef.id);
             setData(prevData => [...prevData, { id: docRef.id, ...values }]);
             resetForm();
         } catch (error) {
@@ -195,24 +193,40 @@ const Orders = () => {
                     </div>
                     <div className="listpend_body">
                         {filteredData.length > 0 ? (
-                            filteredData.map((item) => (
-                                <div className="listpend_row" key={item.id}>
-                                    <div className="listpend_item">{item.code}</div>
-                                    <div className="listpend_item">{item.description}</div>
-                                    <div className="listpend_item">{item.provider}</div>
-                                    <div className="listpend_item">{item.dateAnnoun ? format(new Date(item.dateAnnoun), 'dd/MM/yyyy') : 'N/A'}</div>
-                                    <div className="listpend_item">{item.dateRequest ? format(new Date(item.dateRequest), 'dd/MM/yyyy') : 'N/A'}</div>
-                                    <div className="listpend_item">{item.comments}</div>
-                                    <div className="listpend_item">
-                                        <IconButton
-                                            color="success"
-                                            onClick={() => handleDelete(item.id)}
+                            filteredData.map((item) => {
+                                // Convertimos las fechas a objetos Date
+                                const currentDate = new Date();
+                                const dateRequest = new Date(item.dateRequest);
+                                
+                                // Verificamos si la fecha está vencida
+                                const isExpired = dateRequest < currentDate;
+
+                                return (
+                                    <div className="listpend_row" key={item.id}>
+                                        <div className="listpend_item">{item.code}</div>
+                                        <div className="listpend_item">{item.description}</div>
+                                        <div className="listpend_item">{item.provider}</div>
+                                        <div className="listpend_item">
+                                            {item.dateAnnoun ? format(new Date(item.dateAnnoun), 'dd/MM/yyyy') : 'N/A'}
+                                        </div>
+                                        <div
+                                            className="listpend_item"
+                                            style={{ color: isExpired ? 'red' : 'green' }} // Cambiamos el color
                                         >
-                                            <CheckCircleIcon />
-                                        </IconButton>
+                                            {item.dateRequest ? format(new Date(item.dateRequest), 'dd/MM/yyyy') : 'N/A'}
+                                        </div>
+                                        <div className="listpend_item">{item.comments}</div>
+                                        <div className="listpend_item">
+                                            <IconButton
+                                                color="success"
+                                                onClick={() => handleDelete(item.id)}
+                                            >
+                                                <CheckCircleIcon />
+                                            </IconButton>
+                                        </div>
                                     </div>
-                                </div>
-                            ))
+                                );
+                            })
                         ) : (
                             <div className="listpend_row">
                                 <div className="listpend_item listpend_container_p" colSpan="6">
