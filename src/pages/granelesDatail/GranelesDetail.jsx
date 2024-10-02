@@ -5,56 +5,58 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 
 const GranelesDetail = () => {
-    const { id } = useParams();  // Obtiene el ID desde la URL
-    const [granel, setGranel] = useState(null);  // Estado para almacenar los datos del granel
-    const [loading, setLoading] = useState(true);  // Estado de carga
+    const { id } = useParams();
+    const [granel, setGranel] = useState(null);
+    const [loading, setLoading] = useState(true); 
 
-    // Función para obtener el granel desde Firebase
     const fetchGranelDetail = async () => {
         try {
-            const granelDoc = await getDoc(doc(db, "graneles", id)); // Obtiene el documento por ID
+            const granelDoc = await getDoc(doc(db, "graneles", id));
             if (granelDoc.exists()) {
-                setGranel(granelDoc.data());  // Almacena los datos del granel en el estado
+                setGranel(granelDoc.data());
             } else {
                 console.log("No se encontró el granel");
             }
         } catch (error) {
             console.error("Error obteniendo los detalles del granel: ", error);
         } finally {
-            setLoading(false);  // Desactiva el estado de carga
+            setLoading(false);
         }
     };
 
-    // Ejecuta la consulta cuando el componente se monta
     useEffect(() => {
         fetchGranelDetail();
     }, [id]);
 
-    // Si está cargando los datos, muestra un mensaje de carga
     if (loading) {
-        return <div>Cargando detalles...</div>;
+        return <div>Cargando detalles...</div>; //AGREGAR SKELETON
     }
 
-    // Si no se encontró el granel, muestra un mensaje
     if (!granel) {
         return <div>No se encontraron detalles para este granel</div>;
     }
 
-    // Renderiza la tarjeta con los detalles del granel
     return (
-        <Card sx={{ margin: 2 }}>
-            <CardContent>
-                <Typography variant="h4">Detalles del Granel {granel.code}</Typography>
-                <Typography variant="body1"><strong>Descripción:</strong> {granel.description}</Typography>
-                <Typography variant="body1"><strong>Lotes:</strong> {granel.lotes}</Typography>
-                <Typography variant="body1"><strong>Cantidad:</strong> {granel.cuantity}</Typography>
-                <Typography variant="body1"><strong>Estado:</strong> {granel.state}</Typography>
-                <Typography variant="body1"><strong>Lotes en Stock:</strong> {granel.lotesInStock}</Typography>
-                <Typography variant="body1"><strong>Acondicionar:</strong> {granel.toPacking}</Typography>
-                <Typography variant="body1"><strong>Cantidad Acondicionar:</strong> {granel.cuantityPacking}</Typography>
-                <Typography variant="body1"><strong>Comentarios:</strong> {granel.comments}</Typography>
-            </CardContent>
-        </Card>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "70vh" }}>
+            <Card sx={{width: "500px", boxShadow: "0px 4px 8px grey;", borderRadius: "15px"}}>
+                <CardContent sx={{ display: "flex", flexDirection: "column", justifyContent: "space-evenly",  height: "400px",}}>
+                    <h3 style={{ textAlign: "center" }}>DETALLES DE GRANEL - {granel.code}</h3>
+                    <div>
+                    <Typography variant="body1"><strong>Descripción:</strong> {granel.description}</Typography>
+                    <Typography variant="body1"><strong>Lotes:</strong> {granel.lotes}</Typography>
+                    <Typography variant="body1"><strong>Cantidad:</strong> {granel.cuantity}</Typography>
+                    <Typography variant="body1"><strong>Estado:</strong> {granel.state}</Typography>
+                    </div>
+                    <h3 style={{ textAlign: "center" }}>EMPAQUE/ACONDICIONAR</h3>
+                    <div>
+                    <Typography variant="body1"><strong>Lotes en Stock:</strong> {granel.lotesInStock}</Typography>
+                    <Typography variant="body1"><strong>Acondicionar:</strong> {granel.toPacking}</Typography>
+                    <Typography variant="body1"><strong>Cantidad Acondicionar:</strong> {granel.cuantityPacking}</Typography>
+                    <Typography variant="body1"><strong>Comentarios:</strong> {granel.comments}</Typography>
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
     );
 };
 
