@@ -39,6 +39,15 @@ const Orders = () => {
     const [open, setOpen] = useState(false);
     const [currentId, setCurrentId] = useState(null);
     const [currentData, setCurrentData] = useState({});
+    const [sortConfig, setSortConfig] = useState({ key: '', direction: 'ascending'});
+    const [filters, setFilters] = useState({
+        code: '',
+        description: '',
+        provider: '',
+        dateAnnoun: '',
+        dateRequest: '',
+        comments: '',
+    });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -110,6 +119,7 @@ const Orders = () => {
         (item.provider && item.provider.toLowerCase().includes(searchTerm.toLowerCase())) ||
         (item.comments && item.comments.toLowerCase().includes(searchTerm.toLowerCase()))
     );
+
 
     return (
         <>
@@ -244,14 +254,15 @@ const Orders = () => {
                                         <div className="listpend_item">{item.comments}</div>
                                         <div className="listpend_item">
                                             <IconButton
-                                                color="success"
-                                                onClick={() => handleDelete(item.id)}
+                                                color="primary"
+                                                onClick={() => handleOpen(item)}
+                                                size="small"
                                             >
-                                                <CheckCircleIcon />
+                                                Editar
                                             </IconButton>
                                             <IconButton
-                                                color="default"
-                                                onClick={() => handleOpen(item)}
+                                                color="success"
+                                                onClick={() => handleDelete(item.id)}
                                             >
                                                 <CheckCircleIcon />
                                             </IconButton>
@@ -337,4 +348,3 @@ const Orders = () => {
 };
 
 export default Orders;
-
