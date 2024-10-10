@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { addDoc, getDocs, deleteDoc, doc, collection } from "firebase/firestore";
+import { addDoc, getDocs, deleteDoc, doc, collection, updateDoc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
-import { TextField, Button, Box } from "@mui/material";
+import { TextField, Button, Box, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { Formik, Form, Field } from "formik";
 import { format } from "date-fns";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -9,7 +9,6 @@ import IconButton from "@mui/material/IconButton";
 import * as Yup from "yup";
 import "./orders.css";
 
-// Validación con Yup
 const validationSchema = Yup.object({
     code: Yup.number().required("Código es obligatorio"),
     description: Yup.string().required("Descripción es obligatoria"),
@@ -19,7 +18,6 @@ const validationSchema = Yup.object({
     comments: Yup.string()
 });
 
-// Componente personalizado para TextField
 const CustomTextField = ({ label, form, field, ...props }) => {
     const { name } = field;
     const { touched, errors } = form;
@@ -38,6 +36,9 @@ const CustomTextField = ({ label, form, field, ...props }) => {
 const Orders = () => {
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [open, setOpen] = useState(false);
+    const [currentId, setCurrentId] = useState(null);
+    const [currentData, setCurrentData] = useState({});
 
     useEffect(() => {
         const fetchData = async () => {
@@ -73,6 +74,34 @@ const Orders = () => {
         } catch (error) {
             console.error("Error al eliminar documento: ", error);
         }
+    };
+
+    const handleUpdate = async (idToUpdate, newData) => {
+        try {
+            const docRef = doc(db, "data", idToUpdate);
+            await updateDoc(docRef, newData);
+
+            setData(prevData => prevData.map(item => 
+                item.id === idToUpdate ? { ...item, ...newData } : item
+            ));
+            setOpen(false);
+        } catch (error) {
+            console.error("Error al actualizar documento: ", error);
+        }
+    };
+
+    const handleOpen = (item) => {
+        setCurrentId(item.id);
+        setCurrentData(item);
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleModalSubmit = async (values) => {
+        await handleUpdate(currentId, values);
     };
 
     const filteredData = data.filter(item =>
@@ -189,16 +218,13 @@ const Orders = () => {
                         <div className="listpend_item listpend_header_item">Fecha Solicitada</div>
                         <div className="listpend_item listpend_header_item">Fecha Requerida</div>
                         <div className="listpend_item listpend_header_item">Comentario</div>
-                        <div className="listpend_item listpend_header_item">Ingreso</div>
+                        <div className="listpend_item listpend_header_item">Acciones</div>
                     </div>
                     <div className="listpend_body">
                         {filteredData.length > 0 ? (
                             filteredData.map((item) => {
-                                // Convertimos las fechas a objetos Date
                                 const currentDate = new Date();
                                 const dateRequest = new Date(item.dateRequest);
-                                
-                                // Verificamos si la fecha está vencida
                                 const isExpired = dateRequest < currentDate;
 
                                 return (
@@ -211,7 +237,7 @@ const Orders = () => {
                                         </div>
                                         <div
                                             className="listpend_item"
-                                            style={{ color: isExpired ? 'red' : 'green' }} // Cambiamos el color
+                                            style={{ color: isExpired ? 'red' : 'green' }}
                                         >
                                             {item.dateRequest ? format(new Date(item.dateRequest), 'dd/MM/yyyy') : 'N/A'}
                                         </div>
@@ -223,22 +249,92 @@ const Orders = () => {
                                             >
                                                 <CheckCircleIcon />
                                             </IconButton>
+                                            <IconButton
+                                                color="default"
+                                                onClick={() => handleOpen(item)}
+                                            >
+                                                <CheckCircleIcon />
+                                            </IconButton>
                                         </div>
                                     </div>
                                 );
                             })
                         ) : (
-                            <div className="listpend_row">
-                                <div className="listpend_item listpend_container_p" colSpan="6">
-                                    No hay datos disponibles
-                                </div>
-                            </div>
+                            <div className="listpend_row">No hay datos disponibles</div>
                         )}
                     </div>
                 </div>
             </div>
+
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Actualizar Pedido</DialogTitle>
+                <Formik
+                    initialValues={currentData}
+                    validationSchema={validationSchema}
+                    onSubmit={handleModalSubmit}
+                >
+                    {({ isSubmitting }) => (
+                        <Form>
+                            <DialogContent>
+                                <Field
+                                    name="code"
+                                    label="Código"
+                                    component={CustomTextField}
+                                    variant="outlined"
+                                    type="number"
+                                    fullWidth
+                                />
+                                <Field
+                                    name="description"
+                                    label="Descripción"
+                                    component={CustomTextField}
+                                    variant="outlined"
+                                    fullWidth
+                                />
+                                <Field
+                                    name="provider"
+                                    label="Proveedor"
+                                    component={CustomTextField}
+                                    variant="outlined"
+                                    fullWidth
+                                />
+                                <Field
+                                    name="dateAnnoun"
+                                    label="Fecha Solicitada"
+                                    component={CustomTextField}
+                                    type="date"
+                                    variant="outlined"
+                                    InputLabelProps={{ shrink: true }}
+                                    fullWidth
+                                />
+                                <Field
+                                    name="dateRequest"
+                                    label="Fecha Requerida"
+                                    component={CustomTextField}
+                                    type="date"
+                                    variant="outlined"
+                                    InputLabelProps={{ shrink: true }}
+                                    fullWidth
+                                />
+                                <Field
+                                    name="comments"
+                                    label="Comentario"
+                                    component={CustomTextField}
+                                    variant="outlined"
+                                    fullWidth
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose}>Cancelar</Button>
+                                <Button type="submit" disabled={isSubmitting}>Actualizar</Button>
+                            </DialogActions>
+                        </Form>
+                    )}
+                </Formik>
+            </Dialog>
         </>
     );
 };
 
 export default Orders;
+
