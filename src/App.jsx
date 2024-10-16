@@ -8,20 +8,23 @@ import GranelesDetail from "./pages/granelesDatail/GranelesDetail";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loggedUser, setLoggedUser] = useState(""); // Nuevo estado para el usuario logueado
 
-  const handleLoginSuccess = () => {
+  const handleLoginSuccess = (userName) => {
     setIsAuthenticated(true);
-  };
+    setLoggedUser(userName);
+};
 
   const handleLogout = () => {
     setIsAuthenticated(false);
+    setLoggedUser(""); // Limpiar el nombre de usuario al cerrar sesión
   };
 
   return (
     <BrowserRouter>
       <Routes>
         {isAuthenticated ? (
-          <Route element={<Layout onLogout={handleLogout} />}>
+          <Route element={<Layout onLogout={handleLogout} loggedUser={loggedUser} />}>
             <Route path="/" element={<Orders />} />
             <Route path="/granel" element={<Graneles />} />
             <Route path="/graneles/:id" element={<GranelesDetail />} />
@@ -33,7 +36,6 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
-

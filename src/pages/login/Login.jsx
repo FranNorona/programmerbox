@@ -8,13 +8,20 @@ const Login = ({ onLogin }) => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate(); // Hook para redireccionar
 
+    const userNames = {
+        fnoroña: "Franco",
+        gsanchez: "Gabriel",
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (
             (username === import.meta.env.VITE_USER_1 && password === import.meta.env.VITE_PW_USER_1) || 
             (username === import.meta.env.VITE_USER_2 && password === import.meta.env.VITE_PW_USER_2)
         ) {
-            onLogin(); // Actualiza el estado de autenticación en el App.js
+            const userName = userNames[username]; // Verifica que esto devuelva un string
+            console.log("User name:", userName); // Añade este log para verificar
+            onLogin(userName); // Asegúrate de que esto sea un string
             navigate("/"); // Redirige a la página de Orders
         } else {
             alert('Credenciales incorrectas');

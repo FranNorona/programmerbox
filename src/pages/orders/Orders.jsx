@@ -4,6 +4,7 @@ import { db } from "../../firebaseConfig";
 import { TextField, Button, Box, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { Formik, Form, Field } from "formik";
 import { format } from "date-fns";
+import Greeting from "../../components/greeting/Greeting";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import IconButton from "@mui/material/IconButton";
 import * as Yup from "yup";
@@ -33,7 +34,9 @@ const CustomTextField = ({ label, form, field, ...props }) => {
     );
 };
 
-const Orders = () => {
+const Orders = (loggedUser, userName) => {
+    const user1 = import.meta.env.VITE_USER_1;
+
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [open, setOpen] = useState(false);
@@ -48,6 +51,7 @@ const Orders = () => {
         dateRequest: '',
         comments: '',
     });
+
     const [openForm, setOpenForm] = useState(false);
 
     useEffect(() => {
@@ -133,9 +137,14 @@ const Orders = () => {
 
     return (
         <div className="main_container">
-            <Button variant="contained" onClick={handleOpenForm}>
-                Agregar Pedido
-            </Button>
+            <div>
+                <div>
+                    <h2>Pedidos</h2>
+                    <Button variant="contained" onClick={handleOpenForm}>
+                        Agregar Pedido
+                    </Button>
+                </div>
+            </div>
             
             <Dialog open={openForm} onClose={handleCloseForm}>
                 <DialogTitle>Ingresar Datos del Pedido</DialogTitle>
