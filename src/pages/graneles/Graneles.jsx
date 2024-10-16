@@ -79,7 +79,7 @@ const Graneles = () => {
     };
 
     return (
-        <>
+        <div className="main_container">
             <div className="form_global_graneles">
                 <h1>Ingresar Graneles</h1>
                 <Formik
@@ -194,7 +194,7 @@ const Graneles = () => {
                     ))}
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

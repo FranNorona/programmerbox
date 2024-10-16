@@ -2,6 +2,11 @@ h1 {
     padding-top: 30px;
 }
 
+.main_container {
+    margin-left: 250px;
+    padding: 20px; 
+}
+
 .form_global_graneles {
     display: flex;
     flex-direction: column;

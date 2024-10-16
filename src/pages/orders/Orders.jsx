@@ -132,7 +132,7 @@ const Orders = () => {
 
 
     return (
-        <>
+        <div className="main_container">
             <Button variant="contained" onClick={handleOpenForm}>
                 Agregar Pedido
             </Button>
@@ -356,7 +356,7 @@ const Orders = () => {
                     )}
                 </Formik>
             </Dialog>
-        </>
+        </div>
     );
 };
 

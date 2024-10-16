@@ -10,6 +10,11 @@ h2 {
     text-align: center;
 }
 
+.main_container {
+    margin-left: 250px;
+    padding: 20px; 
+}
+
 .form_global {
     display: flex;
     flex-direction: column;
