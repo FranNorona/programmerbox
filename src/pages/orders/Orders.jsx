@@ -48,6 +48,7 @@ const Orders = () => {
         dateRequest: '',
         comments: '',
     });
+    const [openForm, setOpenForm] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -70,11 +71,20 @@ const Orders = () => {
         try {
             const docRef = await addDoc(collection(db, "data"), values);
             setData(prevData => [...prevData, { id: docRef.id, ...values }]);
+            setOpenForm(false);
             resetForm();
         } catch (error) {
             console.error("Error al agregar documento: ", error);
         }
     };
+
+    const handleOpenForm = () => {
+        setOpenForm(true);
+    };
+
+    const handleCloseForm = () => {
+        setOpenForm(false);
+    }
 
     const handleDelete = async (idToDelete) => {
         try {
@@ -123,91 +133,94 @@ const Orders = () => {
 
     return (
         <>
-            <div className="form_global">
-                <h1>Ingresar Datos del Pedido</h1>
-                <Formik
-                    initialValues={{
-                        code: '',
-                        description: '',
-                        provider: '',
-                        dateAnnoun: '', 
-                        dateRequest: '', 
-                        comments: ''
-                    }}
-                    validationSchema={validationSchema}
-                    onSubmit={handleSubmit}
-                >
-                    {({ isSubmitting }) => (
-                        <Form className="form_container">
-                            <Box sx={{ width: '12.5%', maxWidth: '100%' }}>
+            <Button variant="contained" onClick={handleOpenForm}>
+                Agregar Pedido
+            </Button>
+            
+            <Dialog open={openForm} onClose={handleCloseForm}>
+                <DialogTitle>Ingresar Datos del Pedido</DialogTitle>
+                <DialogContent>
+                    <Formik
+                        initialValues={{
+                            code: '',
+                            description: '',
+                            provider: '',
+                            dateAnnoun: '',
+                            dateRequest: '',
+                            comments: ''
+                        }}
+                        validationSchema={validationSchema}
+                        onSubmit={handleSubmit}
+                    >
+                        {({ isSubmitting }) => (
+                            <Form>
                                 <Field
                                     name="code"
                                     label="Código"
-                                    component={CustomTextField}
-                                    variant="outlined"
-                                    type="number"
+                                    as={TextField}
                                     fullWidth
+                                    margin="normal"
+                                    type="number"
+                                    variant="outlined"
                                 />
-                            </Box>
-                            <Box sx={{ width: '13%', maxWidth: '100%' }}>
                                 <Field
                                     name="description"
                                     label="Descripción"
-                                    component={CustomTextField}
+                                    as={TextField}
+                                    fullWidth
+                                    margin="normal"
                                     variant="outlined"
                                 />
-                            </Box>
-                            <Box sx={{ width: '13%', maxWidth: '100%' }}>
                                 <Field
                                     name="provider"
                                     label="Proveedor"
-                                    component={CustomTextField}
+                                    as={TextField}
+                                    fullWidth
+                                    margin="normal"
                                     variant="outlined"
                                 />
-                            </Box>
-                            <Box sx={{ width: '14.5%', maxWidth: '100%' }}>
                                 <Field
                                     name="dateAnnoun"
                                     label="Fecha Solicitada"
-                                    component={CustomTextField}
+                                    as={TextField}
+                                    fullWidth
+                                    margin="normal"
                                     type="date"
-                                    variant="outlined"
                                     InputLabelProps={{ shrink: true }}
+                                    variant="outlined"
                                 />
-                            </Box>
-                            <Box sx={{ width: '14.5%', maxWidth: '100%' }}>
                                 <Field
                                     name="dateRequest"
                                     label="Fecha Requerida"
-                                    component={CustomTextField}
+                                    as={TextField}
+                                    fullWidth
+                                    margin="normal"
                                     type="date"
-                                    variant="outlined"
                                     InputLabelProps={{ shrink: true }}
+                                    variant="outlined"
                                 />
-                            </Box>
-                            <Box sx={{ width: '15%', maxWidth: '100%' }}>
                                 <Field
                                     name="comments"
-                                    label="Comentario"
-                                    component={CustomTextField}
+                                    label="Comentarios"
+                                    as={TextField}
+                                    fullWidth
+                                    margin="normal"
                                     variant="outlined"
                                 />
-                            </Box>
-                            <div className="addButton">
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    color="inherit"
-                                    disabled={isSubmitting}
-                                >
-                                    Agregar
-                                </Button>
-                            </div>
-                        </Form>
-                    )}
-                </Formik>
-            </div>
-
+                                <DialogActions>
+                                    <Button onClick={handleCloseForm} color="primary">
+                                        Cancelar
+                                    </Button>
+                                    <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>
+                                        Agregar
+                                    </Button>
+                                </DialogActions>
+                            </Form>
+                        )}
+                    </Formik>
+                </DialogContent>
+            </Dialog>
+            
             <div>
                 <TextField
                     label="Buscar"
@@ -337,7 +350,7 @@ const Orders = () => {
                             </DialogContent>
                             <DialogActions>
                                 <Button onClick={handleClose}>Cancelar</Button>
-                                <Button type="submit" disabled={isSubmitting}>Actualizar</Button>
+                                <Button variant="contained" type="submit" disabled={isSubmitting}>Actualizar</Button>
                             </DialogActions>
                         </Form>
                     )}
