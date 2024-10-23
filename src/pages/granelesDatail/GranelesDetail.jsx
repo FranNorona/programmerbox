@@ -29,7 +29,7 @@ const GranelesDetail = () => {
     }, [id]);
 
     if (loading) {
-        return <div>Cargando detalles...</div>; //AGREGAR SKELETON
+        return <div>Cargando detalles...</div>;
     }
 
     if (!granel) {

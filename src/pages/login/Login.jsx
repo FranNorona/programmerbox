@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate para redirección
+import { useNavigate } from 'react-router-dom';
 import "./login.css";
 
 const Login = ({ onLogin }) => {

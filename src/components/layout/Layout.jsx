@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../navbar/Navbar";
-import Greeting from "../greeting/Greeting"; // Asegúrate de importar Greeting
+import Greeting from "../greeting/Greeting";
 
 const Layout = ({ onLogout, loggedUser}) => {
   return (

@@ -39,8 +39,12 @@ const Orders = () => {
     const [open, setOpen] = useState(false);
     const [currentId, setCurrentId] = useState(null);
     const [currentData, setCurrentData] = useState({});
-
     const [openForm, setOpenForm] = useState(false);
+    const [originalData, setOriginalData] = useState([]);
+    const [sortOrder, setSortOrder] = useState({
+        code: 'neutral',
+        description: 'neutral'
+    });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -50,14 +54,60 @@ const Orders = () => {
                 querySnapshot.forEach((doc) => {
                     loadedData.push({ id: doc.id, ...doc.data() });
                 });
+                setOriginalData(loadedData);
                 setData(loadedData);
+    
+                const savedSortOrder = localStorage.getItem('sortOrder');
+                if (savedSortOrder) {
+                    setSortOrder(savedSortOrder);
+                }
             } catch (error) {
                 console.error("Error al obtener datos: ", error);
             }
         };
-
+    
         fetchData();
     }, []);
+
+    useEffect(() => {
+        const sortedData = () => {
+            let sorted = [...originalData];
+    
+            if (sortOrder.code === 'asc') {
+                sorted.sort((a, b) => a.code - b.code);
+            } else if (sortOrder.code === 'desc') {
+                sorted.sort((a, b) => b.code - a.code);
+            }
+    
+            if (sortOrder.description === 'asc') {
+                sorted.sort((a, b) => a.description.localeCompare(b.description));
+            } else if (sortOrder.description === 'desc') {
+                sorted.sort((a, b) => b.description.localeCompare(a.description));
+            }
+
+            if (sortOrder.provider === 'asc') {
+                sorted.sort((a, b) => a.provider.localeCompare(b.provider));
+            } else if (sortOrder.provider === 'desc') {
+                sorted.sort ((a, b) => b.provider.localeCompare(a.provider));
+            }
+
+            if (sortOrder.comments === 'asc') {
+                sorted.sort((a, b) => a.comments.localeCompare(b.comments));
+            } else if (sortOrder.comments === 'desc') {
+                sorted.sort((a, b) => b.comments.localeCompare(a.comments))
+            }
+
+            if (sortOrder.dateRequest === 'asc') {
+                sorted.sort((a, b) => new Date(a.dateRequest) - new Date(b.dateRequest));
+            } else if (sortOrder.dateRequest === 'desc') {
+                sorted.sort((a, b) => new Date(b.dateRequest) - new Date(a.dateRequest));
+            }
+
+            return sorted;
+        };
+    
+        setData(sortedData());
+    }, [sortOrder, originalData]);
 
     const handleSubmit = async (values, { resetForm }) => {
         try {
@@ -122,6 +172,14 @@ const Orders = () => {
         (item.comments && item.comments.toLowerCase().includes(searchTerm.toLowerCase()))
     );
 
+    const handleSort = (column) => {
+        setSortOrder(prev => {
+            const newOrder = prev[column] === 'neutral' ? 'asc' : prev[column] === 'asc' ? 'desc' : 'neutral';
+    
+            const otherColumn = column === 'code' ? 'description' : 'code';
+            return { ...prev, [column]: newOrder, [otherColumn]: 'neutral' };
+        });
+    }
 
     return (
         <div className="main_container">
@@ -228,12 +286,18 @@ const Orders = () => {
             <div>
                 <div className="listpend_container">
                     <div className="listpend_header">
-                        <div className="listpend_item">Código</div>
-                        <div className="listpend_item">Descripción</div>
-                        <div className="listpend_item">Proveedor</div>
+                        <div className="listpend_item pointer" onClick={() => handleSort('code')}>
+                        Código {sortOrder.code === 'asc' ? '↓' : sortOrder.code === 'desc' ? '↑' : ''}
+                        </div>
+                        <div className="listpend_item pointer" onClick={() => handleSort('description')}>
+                        Descripción {sortOrder.description === 'asc' ? '↓' : sortOrder.description === 'desc' ? '↑' : ''}
+                        </div>
+                        <div className="listpend_item pointer" onClick={() => handleSort('provider')}>Proveedor {sortOrder.provider === 'asc' ? '↓' : sortOrder.provider === 'desc' ? '↑' : ''}</div>
                         <div className="listpend_item">Fecha Solicitada</div>
-                        <div className="listpend_item">Fecha Requerida</div>
-                        <div className="listpend_item">Comentario</div>
+                        <div className="listpend_item pointer" onClick={() => handleSort('dateRequest')}>
+                        Fecha Requerida {sortOrder.dateRequest === 'asc' ? '↓' : sortOrder.dateRequest === 'desc' ? '↑' : ''}
+                        </div>
+                        <div className="listpend_item pointer" onClick={() => handleSort('comments')}>Comentario {sortOrder.comments === 'asc' ? '↓' : sortOrder.comments === 'desc' ? '↑' : ''}</div>
                         <div className="listpend_item">Acciones</div>
                     </div>
                     <div className="listpend_body">
@@ -289,6 +353,7 @@ const Orders = () => {
                     initialValues={currentData}
                     validationSchema={validationSchema}
                     onSubmit={handleModalSubmit}
+                    enableReinitialize 
                 >
                     {({ isSubmitting }) => (
                         <Form>

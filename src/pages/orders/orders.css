@@ -18,6 +18,7 @@
 .listpend_header {
     display: flex;
     padding: 15px 0px;
+    max-height: 51px;
     background-color: #f4f4f4;
     border-bottom: 2px solid gray;
     font-weight: bold;
@@ -39,4 +40,8 @@
 .listpend_item {
     width: 15%;
     text-align: center;
+}
+
+.pointer {
+    cursor: pointer;
 }
