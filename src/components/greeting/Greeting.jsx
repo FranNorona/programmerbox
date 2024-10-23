@@ -4,7 +4,7 @@ const Greeting = ({ loggedUser }) => {
 
     if (currentHour < 12) {
         greeting = "Buenos días";
-    } else if (currentHour < 18) {
+    } else if (currentHour < 19) {
         greeting = "Buenas tardes";
     } else {
         greeting = "Buenas noches";
@@ -12,9 +12,9 @@ const Greeting = ({ loggedUser }) => {
 
     return (
         <div>
-            <h1>{greeting}, {loggedUser}</h1>
+            <h1>{greeting}, {loggedUser}.</h1>
         </div>
     );
 };
 
-export default Greeting; // Asegúrate de que esta línea esté presente
+export default Greeting;

@@ -8,7 +8,7 @@ import GranelesDetail from "./pages/granelesDatail/GranelesDetail";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loggedUser, setLoggedUser] = useState(""); // Nuevo estado para el usuario logueado
+  const [loggedUser, setLoggedUser] = useState("");
 
   const handleLoginSuccess = (userName) => {
     setIsAuthenticated(true);
@@ -17,7 +17,7 @@ function App() {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    setLoggedUser(""); // Limpiar el nombre de usuario al cerrar sesión
+    setLoggedUser("");
   };
 
   return (

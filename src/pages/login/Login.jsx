@@ -6,7 +6,7 @@ import "./login.css";
 const Login = ({ onLogin }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate(); // Hook para redireccionar
+    const navigate = useNavigate();
 
     const userNames = {
         fnoroña: "Franco",
@@ -19,10 +19,9 @@ const Login = ({ onLogin }) => {
             (username === import.meta.env.VITE_USER_1 && password === import.meta.env.VITE_PW_USER_1) || 
             (username === import.meta.env.VITE_USER_2 && password === import.meta.env.VITE_PW_USER_2)
         ) {
-            const userName = userNames[username]; // Verifica que esto devuelva un string
-            console.log("User name:", userName); // Añade este log para verificar
-            onLogin(userName); // Asegúrate de que esto sea un string
-            navigate("/"); // Redirige a la página de Orders
+            const userName = userNames[username];
+            onLogin(userName);
+            navigate("/");
         } else {
             alert('Credenciales incorrectas');
         }

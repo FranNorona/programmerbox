@@ -1,57 +1,24 @@
-h1 {
-    padding: 10px;
-    padding-bottom: 35px;
-    text-align: center;
-}
-
-h2 {
-    padding: 10px;
-    padding-top: 20px;
-    text-align: center;
-}
-
-.main_container {
-    margin-left: 250px;
-    padding: 20px; 
-}
-
-.form_global {
+.add_order {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    width: auto;
-    height: auto;
-    padding: 10px;
-    box-shadow: 0px 4px 5px grey;
-    background-color: #6EDE8A;
-}
-
-.addButton {
     margin-bottom: 20px;
 }
 
-.form_container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 95%;
-    height: auto;
-    padding: 10px;
+.add_order h2 {
+    margin: 0;
 }
 
 .listpend_container {
     display: flex;
     flex-direction: column;
-    width: auto;
+    background-color: aqua;
 }
 
 .listpend_header {
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+    padding: 15px 0px;
     background-color: #f4f4f4;
-    padding: 10px;
     border-bottom: 2px solid gray;
     font-weight: bold;
 }
@@ -63,31 +30,13 @@ h2 {
 
 .listpend_row {
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
-    padding: 5px;
     border-bottom: 1px solid gray;
     background-color: lightgray;
+    padding: 2px 0px;
 }
 
 .listpend_item {
     width: 15%;
     text-align: center;
-}
-
-.listpend_header_item {
-    width: 15%;
-    margin-left: 4px;
-    text-align: center;
-}
-
-.listpend_item listpend_header_item_2 {
-    width: 20%;
-    margin-left: 5px;
-    text-align: center;
-}
-
-.listpend_container_p {
-    text-align: center;
-    width: 100%;
 }

@@ -6,3 +6,9 @@
   box-sizing: border-box;
   font-family: "Roboto", system-ui;
 }
+
+h1 {
+  padding-top: 13px;
+  padding-left: 20px;
+  margin-left: 20vw;
+}

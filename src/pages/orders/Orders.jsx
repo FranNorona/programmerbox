@@ -4,7 +4,6 @@ import { db } from "../../firebaseConfig";
 import { TextField, Button, Box, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { Formik, Form, Field } from "formik";
 import { format } from "date-fns";
-import Greeting from "../../components/greeting/Greeting";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import IconButton from "@mui/material/IconButton";
 import * as Yup from "yup";
@@ -34,23 +33,12 @@ const CustomTextField = ({ label, form, field, ...props }) => {
     );
 };
 
-const Orders = (loggedUser, userName) => {
-    const user1 = import.meta.env.VITE_USER_1;
-
+const Orders = () => {
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [open, setOpen] = useState(false);
     const [currentId, setCurrentId] = useState(null);
     const [currentData, setCurrentData] = useState({});
-    const [sortConfig, setSortConfig] = useState({ key: '', direction: 'ascending'});
-    const [filters, setFilters] = useState({
-        code: '',
-        description: '',
-        provider: '',
-        dateAnnoun: '',
-        dateRequest: '',
-        comments: '',
-    });
 
     const [openForm, setOpenForm] = useState(false);
 
@@ -137,14 +125,11 @@ const Orders = (loggedUser, userName) => {
 
     return (
         <div className="main_container">
-            <div>
-                <div>
-                    <h2>Pedidos</h2>
+                <div className="add_order">
                     <Button variant="contained" onClick={handleOpenForm}>
                         Agregar Pedido
                     </Button>
                 </div>
-            </div>
             
             <Dialog open={openForm} onClose={handleCloseForm}>
                 <DialogTitle>Ingresar Datos del Pedido</DialogTitle>
@@ -241,16 +226,15 @@ const Orders = (loggedUser, userName) => {
             </div>  
 
             <div>
-                <h2>Pedidos Solicitados</h2>
                 <div className="listpend_container">
                     <div className="listpend_header">
-                        <div className="listpend_item listpend_header_item_2">Código</div>
-                        <div className="listpend_item listpend_header_item">Descripción</div>
-                        <div className="listpend_item listpend_header_item">Proveedor</div>
-                        <div className="listpend_item listpend_header_item">Fecha Solicitada</div>
-                        <div className="listpend_item listpend_header_item">Fecha Requerida</div>
-                        <div className="listpend_item listpend_header_item">Comentario</div>
-                        <div className="listpend_item listpend_header_item">Acciones</div>
+                        <div className="listpend_item">Código</div>
+                        <div className="listpend_item">Descripción</div>
+                        <div className="listpend_item">Proveedor</div>
+                        <div className="listpend_item">Fecha Solicitada</div>
+                        <div className="listpend_item">Fecha Requerida</div>
+                        <div className="listpend_item">Comentario</div>
+                        <div className="listpend_item">Acciones</div>
                     </div>
                     <div className="listpend_body">
                         {filteredData.length > 0 ? (

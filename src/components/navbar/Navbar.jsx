@@ -3,7 +3,7 @@ import PowerSettingsNewOutlinedIcon from '@mui/icons-material/PowerSettingsNewOu
 import IconButton from "@mui/material/IconButton";
 import "./navbar.css";
 
-const Navbar = ({ onLogout }) => {
+const Navbar = ({ onLogout, loggedUser }) => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -11,20 +11,42 @@ const Navbar = ({ onLogout }) => {
         navigate("/login");
     };
 
+    const profilePics = {
+        Franco: import.meta.env.VITE_PIC_USER_1,
+        Gabriel: import.meta.env.VITE_PIC_USER_2,
+    };
+
+    const userRoles = {
+        Franco: "Analista de Planeamiento",
+        Gabriel: "Jefe de Planeamiento",
+    }
+
+    const defaultProfilePic = import.meta.env.VITE_PIC_DEFAULT;
+
+    const profilePicsUrl = profilePics[loggedUser] || defaultProfilePic;
+
+    const userRole = userRoles[loggedUser] || "Usuario";
+
     return (
         <div className="navbar_container">
-            <img src="https://res.cloudinary.com/dmhprmqnk/image/upload/v1726067335/logop_smiqmt.png" alt="logo" />
-            <ul>
-                <li>
-                    <Link className="links_container" to="/">Pedidos</Link>
-                </li>
-                <li>
-                    <Link className="links_container" to="/granel">Graneles</Link>
-                </li>
-                <li>
+
+            <div className="profile_container">
+                <img src={profilePicsUrl} alt={`${loggedUser} profile`} />
+                <div className="profile_info">
+                    <h3>{loggedUser}</h3>
+                    <h4>{userRole}</h4>
+                </div>  
+            </div>
+            
+            <div className="links_container">
+                <div className="options_container">
+                    <Link to="/" className="links">Pedidos</Link>
+                    <Link to="/granel" className="links">Graneles</Link>
+                </div>         
+                <div>
                     <IconButton className="links_container" onClick={handleLogout}><PowerSettingsNewOutlinedIcon /></IconButton>
-                </li>
-            </ul>
+                </div>    
+            </div>
         </div>
     );
 }
