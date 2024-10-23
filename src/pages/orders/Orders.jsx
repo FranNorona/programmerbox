@@ -176,10 +176,16 @@ const Orders = () => {
         setSortOrder(prev => {
             const newOrder = prev[column] === 'neutral' ? 'asc' : prev[column] === 'asc' ? 'desc' : 'neutral';
     
-            const otherColumn = column === 'code' ? 'description' : 'code';
-            return { ...prev, [column]: newOrder, [otherColumn]: 'neutral' };
+            const columns = ['code', 'description', 'provider', 'dateRequest', 'comments'];
+            
+            const newSortOrder = columns.reduce((acc, col) => {
+                acc[col] = col === column ? newOrder : 'neutral';
+                return acc;
+            }, {});
+    
+            return newSortOrder;
         });
-    }
+    };
 
     return (
         <div className="main_container">
