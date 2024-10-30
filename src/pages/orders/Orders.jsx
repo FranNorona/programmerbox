@@ -46,6 +46,8 @@ const Orders = () => {
         description: 'neutral'
     });
 
+    const [currentPage, setCurrentPage] = useState(1);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -56,11 +58,6 @@ const Orders = () => {
                 });
                 setOriginalData(loadedData);
                 setData(loadedData);
-    
-                const savedSortOrder = localStorage.getItem('sortOrder');
-                if (savedSortOrder) {
-                    setSortOrder(savedSortOrder);
-                }
             } catch (error) {
                 console.error("Error al obtener datos: ", error);
             }
@@ -187,6 +184,27 @@ const Orders = () => {
         });
     };
 
+    const ITEMS_PER_PAGE = 14;
+
+    const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+
+    const paginatedData = filteredData.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+    );
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+          setCurrentPage(prevPage => prevPage + 1);
+        }
+      };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+          setCurrentPage(prevPage => prevPage - 1);
+        }
+    };
+
     return (
         <div className="main_container">
                 <div className="add_order">
@@ -307,8 +325,8 @@ const Orders = () => {
                         <div className="listpend_item">Acciones</div>
                     </div>
                     <div className="listpend_body">
-                        {filteredData.length > 0 ? (
-                            filteredData.map((item) => {
+                        {paginatedData.length > 0 ? (
+                            paginatedData.map((item) => {
                                 const currentDate = new Date();
                                 const dateRequest = new Date(item.dateRequest);
                                 const isExpired = dateRequest < currentDate;
@@ -350,6 +368,15 @@ const Orders = () => {
                             <div className="listpend_row">No hay datos disponibles</div>
                         )}
                     </div>
+                </div>
+                <div className="pagination_controls">
+                    <Button onClick={handlePrevPage} disabled={currentPage === 1}>
+                        Anterior
+                    </Button>
+                    <span>Página {currentPage} de {totalPages}</span>
+                    <Button onClick={handleNextPage} disabled={currentPage === totalPages}>
+                        Siguiente
+                    </Button>
                 </div>
             </div>
 
