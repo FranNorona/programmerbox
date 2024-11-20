@@ -3,7 +3,7 @@ import PowerSettingsNewOutlinedIcon from '@mui/icons-material/PowerSettingsNewOu
 import IconButton from "@mui/material/IconButton";
 import "./navbar.css";
 
-const Navbar = ({ onLogout, loggedUser }) => {
+const Navbar = ({ onLogout, loggedUser, expiredCount, activeCount}) => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -42,8 +42,12 @@ const Navbar = ({ onLogout, loggedUser }) => {
                 <div className="options_container">
                     <Link to="/" className="links">Pedidos</Link>
                     <Link to="/granel" className="links">Graneles</Link>
-                </div>         
+                </div>        
                 <div>
+                    <div className="navbar_count">
+                        <div>Total Vencidos: {expiredCount}</div>
+                        <div>Total Vigentes: {activeCount}</div>
+                    </div> 
                     <IconButton className="links_container" onClick={handleLogout}><PowerSettingsNewOutlinedIcon /></IconButton>
                 </div>    
             </div>

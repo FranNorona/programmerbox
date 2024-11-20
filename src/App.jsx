@@ -9,6 +9,8 @@ import GranelesDetail from "./pages/granelesDatail/GranelesDetail";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loggedUser, setLoggedUser] = useState("");
+  const [expiredCount, setExpiredCount] = useState(0);
+  const [activeCount, setActiveCount] = useState(0);
 
   const handleLoginSuccess = (userName) => {
     setIsAuthenticated(true);
@@ -24,8 +26,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         {isAuthenticated ? (
-          <Route element={<Layout onLogout={handleLogout} loggedUser={loggedUser} />}>
-            <Route path="/" element={<Orders />} />
+          <Route element={<Layout onLogout={handleLogout} loggedUser={loggedUser} expiredCount={expiredCount} activeCount={activeCount}/>}>
+            <Route path="/" element={<Orders setExpiredCount={setExpiredCount} setActiveCount={setActiveCount} />} />
             <Route path="/granel" element={<Graneles />} />
             <Route path="/graneles/:id" element={<GranelesDetail />} />
           </Route>

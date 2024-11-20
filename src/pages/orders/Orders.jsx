@@ -33,7 +33,7 @@ const CustomTextField = ({ label, form, field, ...props }) => {
     );
 };
 
-const Orders = () => {
+const Orders = ({ setExpiredCount, setActiveCount }) => {
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [open, setOpen] = useState(false);
@@ -44,7 +44,7 @@ const Orders = () => {
     const [sortOrder, setSortOrder] = useState({
         code: 'neutral',
         description: 'neutral'
-    });
+    })
 
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -105,6 +105,13 @@ const Orders = () => {
     
         setData(sortedData());
     }, [sortOrder, originalData]);
+
+    useEffect(() => {
+        const expired = data.filter(item => new Date(item.dateRequest) < new Date()).length;
+        const active = data.filter(item => new Date(item.dateRequest) >= new Date()).length;
+        setExpiredCount(expired); 
+        setActiveCount(active);
+    }, [data, setExpiredCount, setActiveCount]);
 
     const handleSubmit = async (values, { resetForm }) => {
         try {
