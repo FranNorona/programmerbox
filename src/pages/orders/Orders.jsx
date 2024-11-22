@@ -41,23 +41,22 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
     const [currentData, setCurrentData] = useState({});
     const [openForm, setOpenForm] = useState(false);
     const [originalData, setOriginalData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
     const [sortOrder, setSortOrder] = useState({
         code: 'neutral',
         description: 'neutral'
     })
-
     const [currentPage, setCurrentPage] = useState(1);
 
+    // Fetching data from Firebase
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const querySnapshot = await getDocs(collection(db, "data"));
-                const loadedData = [];
-                querySnapshot.forEach((doc) => {
-                    loadedData.push({ id: doc.id, ...doc.data() });
-                });
+                const loadedData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 setOriginalData(loadedData);
                 setData(loadedData);
+                setFilteredData(loadedData);
             } catch (error) {
                 console.error("Error al obtener datos: ", error);
             }
@@ -66,9 +65,10 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
         fetchData();
     }, []);
 
+    // Sorting data based on sortOrder
     useEffect(() => {
         const sortedData = () => {
-            let sorted = [...originalData];
+            let sorted = [...data];
     
             if (sortOrder.code === 'asc') {
                 sorted.sort((a, b) => a.code - b.code);
@@ -85,7 +85,7 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
             if (sortOrder.provider === 'asc') {
                 sorted.sort((a, b) => a.provider.localeCompare(b.provider));
             } else if (sortOrder.provider === 'desc') {
-                sorted.sort ((a, b) => b.provider.localeCompare(a.provider));
+                sorted.sort((a, b) => b.provider.localeCompare(a.provider));
             }
 
             if (sortOrder.comments === 'asc') {
@@ -103,15 +103,16 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
             return sorted;
         };
     
-        setData(sortedData());
-    }, [sortOrder, originalData]);
+        setFilteredData(sortedData());
+    }, [sortOrder, data]);
 
+    // Updating expired and active counts based on filteredData
     useEffect(() => {
-        const expired = data.filter(item => new Date(item.dateRequest) < new Date()).length;
-        const active = data.filter(item => new Date(item.dateRequest) >= new Date()).length;
+        const expired = filteredData.filter(item => new Date(item.dateRequest) < new Date()).length;
+        const active = filteredData.filter(item => new Date(item.dateRequest) >= new Date()).length;
         setExpiredCount(expired); 
         setActiveCount(active);
-    }, [data, setExpiredCount, setActiveCount]);
+    }, [filteredData]);
 
     const handleSubmit = async (values, { resetForm }) => {
         try {
@@ -169,13 +170,6 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
         await handleUpdate(currentId, values);
     };
 
-    const filteredData = data.filter(item =>
-        (item.code && String(item.code).toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (item.provider && item.provider.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (item.comments && item.comments.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
-
     const handleSort = (column) => {
         setSortOrder(prev => {
             const newOrder = prev[column] === 'neutral' ? 'asc' : prev[column] === 'asc' ? 'desc' : 'neutral';
@@ -191,6 +185,16 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
         });
     };
 
+    const applyFilter = (searchTerm) => {
+        const filtered = originalData.filter(item => 
+            (item.code && String(item.code).toLowerCase().includes(searchTerm.toLowerCase())) || 
+            (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase())) || 
+            (item.provider && item.provider.toLowerCase().includes(searchTerm.toLowerCase())) || 
+            (item.comments && item.comments.toLowerCase().includes(searchTerm.toLowerCase()))
+        );
+        setFilteredData(filtered);
+    };
+
     const ITEMS_PER_PAGE = 14;
 
     const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
@@ -202,13 +206,13 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
 
     const handleNextPage = () => {
         if (currentPage < totalPages) {
-          setCurrentPage(prevPage => prevPage + 1);
+            setCurrentPage(prevPage => prevPage + 1);
         }
-      };
+    };
 
     const handlePrevPage = () => {
         if (currentPage > 1) {
-          setCurrentPage(prevPage => prevPage - 1);
+            setCurrentPage(prevPage => prevPage - 1);
         }
     };
 
@@ -310,9 +314,13 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
                     variant="filled"
                     fullWidth
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    applyFilter(e.target.value);
+                }}
                 />
-            </div>  
+            </div>
+
 
             <div>
                 <div className="listpend_container">
