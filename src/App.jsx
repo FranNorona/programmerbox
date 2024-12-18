@@ -5,6 +5,7 @@ import Login from "./pages/login/Login";
 import Orders from "./pages/orders/Orders";
 import Graneles from "./pages/graneles/Graneles";
 import GranelesDetail from "./pages/granelesDatail/GranelesDetail";
+import NotFound from "./components/notFound/NotFound";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -28,7 +29,7 @@ function App() {
         {isAuthenticated ? (
           <Route element={<Layout onLogout={handleLogout} loggedUser={loggedUser} expiredCount={expiredCount} activeCount={activeCount}/>}>
             <Route path="/" element={<Orders setExpiredCount={setExpiredCount} setActiveCount={setActiveCount} />} />
-            <Route path="/granel" element={<Graneles />} />
+            <Route path="/granel" element={<NotFound />} />
             <Route path="/graneles/:id" element={<GranelesDetail />} />
           </Route>
         ) : (
