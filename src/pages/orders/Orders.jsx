@@ -4,8 +4,7 @@ import { db } from "../../firebaseConfig";
 import { TextField, Button, Box, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { Formik, Form, Field } from "formik";
 import { format } from "date-fns";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import IconButton from "@mui/material/IconButton";
+import Dropdown from "../../components/dropdown/Dropdown";
 import * as Yup from "yup";
 import "./orders.css";
 
@@ -48,7 +47,6 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
     })
     const [currentPage, setCurrentPage] = useState(1);
 
-    // Fetching data from Firebase
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -65,7 +63,6 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
         fetchData();
     }, []);
 
-    // Sorting data based on sortOrder
     useEffect(() => {
         const sortedData = () => {
             let sorted = [...data];
@@ -106,7 +103,6 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
         setFilteredData(sortedData());
     }, [sortOrder, data]);
 
-    // Updating expired and active counts based on filteredData
     useEffect(() => {
         const expired = filteredData.filter(item => new Date(item.dateRequest) < new Date()).length;
         const active = filteredData.filter(item => new Date(item.dateRequest) >= new Date()).length;
@@ -134,13 +130,12 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
     }
 
     const handleDelete = async (idToDelete) => {
-        try {
-            await deleteDoc(doc(db, "data", idToDelete));
-            setData(prevData => prevData.filter((item) => item.id !== idToDelete));
-        } catch (error) {
-            console.error("Error al eliminar documento: ", error);
-        }
-    };
+    try {
+        await deleteDoc(doc(db, "data", idToDelete));
+        setData(prevData => prevData.filter((item) => item.id !== idToDelete));
+    } catch (error) {
+        console.error("Error al eliminar documento: ", error);
+    }};
 
     const handleUpdate = async (idToUpdate, newData) => {
         try {
@@ -195,7 +190,7 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
         setFilteredData(filtered);
     };
 
-    const ITEMS_PER_PAGE = 13;
+    const ITEMS_PER_PAGE = 10;
 
     const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
 
@@ -372,19 +367,7 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
                                         </div>
                                         <div className="listpend_item">{item.comments}</div>
                                         <div className="listpend_item">
-                                            <IconButton
-                                                color="primary"
-                                                onClick={() => handleOpen(item)}
-                                                size="small"
-                                            >
-                                                Editar
-                                            </IconButton>
-                                            <IconButton
-                                                color="success"
-                                                onClick={() => handleDelete(item.id)}
-                                            >
-                                                <CheckCircleIcon />
-                                            </IconButton>
+                                            <Dropdown onEdit={() => handleOpen(item)} onDelete={() => handleDelete(item.id)} />
                                         </div>
                                     </div>
                                 );

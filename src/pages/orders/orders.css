@@ -40,9 +40,10 @@
 .listpend_row {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid gray;
-    background-color: lightgray;
+    height: 60px;
     padding: 2px 0px;
+    background-color: lightgray;
+    border-bottom: 1px solid gray;
 }
 
 .listpend_item {
