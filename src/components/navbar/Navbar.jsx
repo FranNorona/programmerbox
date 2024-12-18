@@ -43,12 +43,12 @@ const Navbar = ({ onLogout, loggedUser, expiredCount, activeCount}) => {
                     <Link to="/" className="links">Pedidos</Link>
                     <Link to="/granel" className="links">Graneles</Link>
                 </div>        
-                <div>
+                <div className="navbar_count_container">
                     <div className="navbar_count">
-                        <div>Total Vencidos: {expiredCount}</div>
-                        <div>Total Vigentes: {activeCount}</div>
+                        <div>{expiredCount} Vencidos</div>
+                        <div>{activeCount} Vigentes</div>
                     </div> 
-                    <IconButton className="links_container" onClick={handleLogout}><PowerSettingsNewOutlinedIcon /></IconButton>
+                    <IconButton className="logout_button" onClick={handleLogout}><PowerSettingsNewOutlinedIcon /></IconButton>
                 </div>    
             </div>
         </div>
