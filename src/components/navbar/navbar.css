@@ -72,6 +72,7 @@
     align-items: center;
     width: 100%;
     height: 25%;
+    padding-bottom: 5px;
 }
 
 .navbar_count {
@@ -83,7 +84,26 @@
     height: 70%;
     border-radius: 20px;
     background: #e0e0e0;
-    box-shadow: 20px 20px 30px #bebebe,
-            -20px -20px 40px #ffffff;
+    box-shadow: 20px 20px 30px #bebebe, -20px -20px 40px #ffffff;
     font-weight: 500;
+}
+
+.logout_button {
+    background-color: #e0e0e0;
+    border-radius: 50px;
+    box-shadow: inset 4px 4px 10px #bcbcbc, inset -4px -4px 10px #ffffff;
+    color: #4d4d4d;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.2s ease-in-out;
+    border: 2px solid rgb(206, 206, 206);
+}
+
+.logout_button:hover    {
+    box-shadow: inset 2px 2px 5px #bcbcbc, inset -2px -2px 5px #ffffff, 2px 2px 5px #bcbcbc, -2px -2px 5px #ffffff;
+}
+
+.logout_button:focus    {
+    outline: none;
+    box-shadow: inset 2px 2px 5px #bcbcbc, inset -2px -2px 5px #ffffff, 2px 2px 5px #bcbcbc, -2px -2px 5px #ffffff;
 }
