@@ -195,7 +195,7 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
         setFilteredData(filtered);
     };
 
-    const ITEMS_PER_PAGE = 14;
+    const ITEMS_PER_PAGE = 13;
 
     const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
 
@@ -218,11 +218,35 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
 
     return (
         <div className="main_container">
-                <div className="add_order">
-                    <Button variant="contained" onClick={handleOpenForm}>
-                        Agregar Pedido
-                    </Button>
-                </div>
+            <div className="add_order">
+            <div className="search_container">
+                <TextField
+                    label="Buscar"
+                    variant="filled"
+                    value={searchTerm}
+                    onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    applyFilter(e.target.value);
+                    }}
+                    sx={{
+                    height: '40px',
+                    width: '100%',
+                    '& .MuiFilledInput-root': {
+                        borderRadius: '5px'}
+                    }}
+                    InputProps={{
+                        disableUnderline: true,
+                    }}
+                />
+            </div>
+                <Button variant="contained" 
+                    sx={{ height: '55px',
+                    width: '19%',
+                    }}
+                    onClick={handleOpenForm}>
+                    Agregar Pedido
+                </Button>
+            </div>
             
             <Dialog open={openForm} onClose={handleCloseForm}>
                 <DialogTitle>Ingresar Datos del Pedido</DialogTitle>
@@ -307,22 +331,8 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
                     </Formik>
                 </DialogContent>
             </Dialog>
-            
-            <div>
-                <TextField
-                    label="Buscar"
-                    variant="filled"
-                    fullWidth
-                    value={searchTerm}
-                    onChange={(e) => {
-                    setSearchTerm(e.target.value);
-                    applyFilter(e.target.value);
-                }}
-                />
-            </div>
 
-
-            <div>
+            <div className="listpend_global">
                 <div className="listpend_container">
                     <div className="listpend_header">
                         <div className="listpend_item pointer" onClick={() => handleSort('code')}>

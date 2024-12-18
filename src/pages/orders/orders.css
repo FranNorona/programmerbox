@@ -1,7 +1,6 @@
 .add_order {
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
 }
 
@@ -9,10 +8,18 @@
     margin: 0;
 }
 
+.search_container   {
+    width: 80%;
+}
+
+.listpend_global    {
+    border-radius: 10px;
+    border: 2px solid grey;
+}
+
 .listpend_container {
     display: flex;
     flex-direction: column;
-    background-color: aqua;
 }
 
 .listpend_header {
@@ -21,6 +28,7 @@
     max-height: 51px;
     background-color: #f4f4f4;
     border-bottom: 2px solid gray;
+    border-radius: 10px 10px 0 0;
     font-weight: bold;
 }
 
