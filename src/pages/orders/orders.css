@@ -54,3 +54,9 @@
 .pointer {
     cursor: pointer;
 }
+
+.pagination_controls  {
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px grey;
+    font-weight: 450;
+}

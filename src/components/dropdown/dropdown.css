@@ -28,8 +28,14 @@
     font-weight: bold;
   }
   
+.dropdown-toggle:hover {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3); /* sombra difusa en gris */
+    border-radius: 50px;
+    background-color: rgba(0, 0, 0, 0.1)/* Cambiar color de fondo si lo deseas */
+}
+
 .dropdown-item:hover {
     background-color: #549ee7e7;
     border-radius: 5px;
 }
-  
+ 
