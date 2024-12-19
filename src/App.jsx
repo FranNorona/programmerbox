@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Toaster } from 'sonner'
 import Layout from "./components/layout/Layout";
 import Login from "./pages/login/Login";
 import Orders from "./pages/orders/Orders";
 import Graneles from "./pages/graneles/Graneles";
 import GranelesDetail from "./pages/granelesDatail/GranelesDetail";
 import NotFound from "./components/notFound/NotFound";
+import "./index.css"
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -25,6 +27,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Toaster richColors position="bottom-right"/>
       <Routes>
         {isAuthenticated ? (
           <Route element={<Layout onLogout={handleLogout} loggedUser={loggedUser} expiredCount={expiredCount} activeCount={activeCount}/>}>

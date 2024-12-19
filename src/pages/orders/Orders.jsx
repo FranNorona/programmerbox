@@ -4,10 +4,13 @@ import { db } from "../../firebaseConfig";
 import { TextField, Button, Box, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { Formik, Form, Field } from "formik";
 import { format } from "date-fns";
+import { ToastContainer} from 'react-toastify';
+import { toast } from "sonner";
 import emailjs from 'emailjs-com';
 import Dropdown from "../../components/dropdown/Dropdown";
 import * as Yup from "yup";
 import "./orders.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 const validationSchema = Yup.object({
     code: Yup.number().required("Código es obligatorio"),
@@ -225,10 +228,11 @@ const Orders = ({ setExpiredCount, setActiveCount, loggedUser }) => {
         emailjs
           .send(import.meta.env.VITE_YOUR_SERVICE_ID, import.meta.env.VITE_YOUR_TEMPLATE_ID, templateParams)
           .then((response) => {
-            console.log('Correo enviado con éxito:', response.status, response.text);
+            console.log('Correo enviado:', response.status, response.text);
+            toast.success('Correo enviado', { style: { height: '80px'}});
           })
           .catch((error) => {
-            console.error('Error al enviar el correo:', error);
+            console.error('Error al enviar el correo:', error); 
           });
       };
 
@@ -388,6 +392,7 @@ const Orders = ({ setExpiredCount, setActiveCount, loggedUser }) => {
                                         </div>
                                         <div className="listpend_item">{item.comments}</div>
                                         <div className="listpend_item">
+                                            <ToastContainer />
                                             <Dropdown onEdit={() => handleOpen(item)} onDelete={() => handleDelete(item.id)}  onSend={() => sendEmail(item)}/>
                                         </div>
                                     </div>
