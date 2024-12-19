@@ -27,7 +27,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Toaster richColors position="bottom-right"/>
+      <Toaster richColors position="top-center"/>
       <Routes>
         {isAuthenticated ? (
           <Route element={<Layout onLogout={handleLogout} loggedUser={loggedUser} expiredCount={expiredCount} activeCount={activeCount}/>}>

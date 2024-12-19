@@ -229,12 +229,12 @@ const Orders = ({ setExpiredCount, setActiveCount, loggedUser }) => {
           .send(import.meta.env.VITE_YOUR_SERVICE_ID, import.meta.env.VITE_YOUR_TEMPLATE_ID, templateParams)
           .then((response) => {
             console.log('Correo enviado:', response.status, response.text);
-            toast.success('Correo enviado', { style: { height: '80px'}});
+            toast.success('Correo enviado', { style: { height: '80px', paddingLeft: '10px'}});
           })
           .catch((error) => {
             console.error('Error al enviar el correo:', error); 
           });
-      };
+    };
 
     return (
         <div className="main_container">
