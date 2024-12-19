@@ -11,13 +11,15 @@ const Login = ({ onLogin }) => {
     const userNames = {
         fnoroña: "Franco",
         gsanchez: "Gabriel",
+        deposito: "Deposito"
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (
             (username === import.meta.env.VITE_USER_1 && password === import.meta.env.VITE_PW_USER_1) || 
-            (username === import.meta.env.VITE_USER_2 && password === import.meta.env.VITE_PW_USER_2)
+            (username === import.meta.env.VITE_USER_2 && password === import.meta.env.VITE_PW_USER_2) || 
+            (username === import.meta.env.VITE_USER_3 && password === import.meta.env.VITE_PW_USER_3)
         ) {
             const userName = userNames[username];
             onLogin(userName);

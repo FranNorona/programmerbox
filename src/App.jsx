@@ -28,7 +28,7 @@ function App() {
       <Routes>
         {isAuthenticated ? (
           <Route element={<Layout onLogout={handleLogout} loggedUser={loggedUser} expiredCount={expiredCount} activeCount={activeCount}/>}>
-            <Route path="/" element={<Orders setExpiredCount={setExpiredCount} setActiveCount={setActiveCount} />} />
+            <Route path="/" element={<Orders setExpiredCount={setExpiredCount} setActiveCount={setActiveCount} loggedUser={loggedUser}/>} />
             <Route path="/granel" element={<NotFound />} />
             <Route path="/graneles/:id" element={<GranelesDetail />} />
           </Route>

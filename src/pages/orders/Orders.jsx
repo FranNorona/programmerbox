@@ -4,6 +4,7 @@ import { db } from "../../firebaseConfig";
 import { TextField, Button, Box, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { Formik, Form, Field } from "formik";
 import { format } from "date-fns";
+import emailjs from 'emailjs-com';
 import Dropdown from "../../components/dropdown/Dropdown";
 import * as Yup from "yup";
 import "./orders.css";
@@ -32,7 +33,7 @@ const CustomTextField = ({ label, form, field, ...props }) => {
     );
 };
 
-const Orders = ({ setExpiredCount, setActiveCount }) => {
+const Orders = ({ setExpiredCount, setActiveCount, loggedUser }) => {
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [open, setOpen] = useState(false);
@@ -211,6 +212,28 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
         }
     };
 
+    emailjs.init(import.meta.env.VITE_YOUR_USER_ID);
+
+    const sendEmail = (item) => {
+        const templateParams = {
+          loggedUser: loggedUser,
+          code: item.code,
+          description: item.description,
+          provider: item.provider,
+        };
+
+        console.log('Correo enviado con éxito:', templateParams);
+      
+        emailjs
+          .send(import.meta.env.VITE_YOUR_SERVICE_ID, import.meta.env.VITE_YOUR_TEMPLATE_ID, templateParams)
+          .then((response) => {
+            console.log('Correo enviado con éxito:', response.status, response.text);
+          })
+          .catch((error) => {
+            console.error('Error al enviar el correo:', error);
+          });
+      };
+
     return (
         <div className="main_container">
             <div className="add_order">
@@ -367,7 +390,7 @@ const Orders = ({ setExpiredCount, setActiveCount }) => {
                                         </div>
                                         <div className="listpend_item">{item.comments}</div>
                                         <div className="listpend_item">
-                                            <Dropdown onEdit={() => handleOpen(item)} onDelete={() => handleDelete(item.id)} />
+                                            <Dropdown onEdit={() => handleOpen(item)} onDelete={() => handleDelete(item.id)}  onSend={() => sendEmail(item)}/>
                                         </div>
                                     </div>
                                 );

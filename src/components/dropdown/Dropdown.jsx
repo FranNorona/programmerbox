@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import "./dropdown.css"
 
-const Dropdown = ({ onEdit, onDelete, onPaint }) => {
+const Dropdown = ({ onEdit, onDelete, onSend }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -20,7 +20,7 @@ const Dropdown = ({ onEdit, onDelete, onPaint }) => {
           <button className="dropdown-item" onClick={onDelete}>
             Eliminar
           </button>
-          <button className="dropdown-item" onClick={onPaint}>
+          <button className="dropdown-item" onClick={onSend}>
             Ingreso
           </button>
         </div>
