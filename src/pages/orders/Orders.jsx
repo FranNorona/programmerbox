@@ -221,8 +221,6 @@ const Orders = ({ setExpiredCount, setActiveCount, loggedUser }) => {
           description: item.description,
           provider: item.provider,
         };
-
-        console.log('Correo enviado con éxito:', templateParams);
       
         emailjs
           .send(import.meta.env.VITE_YOUR_SERVICE_ID, import.meta.env.VITE_YOUR_TEMPLATE_ID, templateParams)

@@ -72,7 +72,6 @@ const Graneles = () => {
 
             fetchGraneles();
             resetForm();
-            console.log("Granel añadido correctamente");
         } catch (error) {
             console.error("Error añadiendo granel: ", error);
         }
