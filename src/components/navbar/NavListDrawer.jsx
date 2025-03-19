@@ -2,7 +2,7 @@ import { Box, ListItemButton, ListItemIcon } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import LogOutButton from "../logOutButton/LogOutButton";
+import LogoutButton from "../logoutButton/LogoutButton";
 
 const NavListDrawer = ({ navLinks }) => {
   return (
@@ -18,7 +18,7 @@ const NavListDrawer = ({ navLinks }) => {
             </ListItem>
           ))}
         </List>
-        <LogOutButton />
+        <LogoutButton />
       </nav>
     </Box>
   );

@@ -1,7 +1,7 @@
 import { getAuth, signOut } from "firebase/auth";
 import { Button } from "@mui/material";
 
-const LogOutButton = () => {
+const LogoutButton = () => {
     const handleLogout = async () => {
         const auth = getAuth();
 
@@ -21,4 +21,4 @@ const LogOutButton = () => {
     );
 };
 
-export default LogOutButton;
+export default LogoutButton;
