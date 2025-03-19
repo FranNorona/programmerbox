@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import {Box} from "@mui/material";
-import { MaterialsUpdateContext } from "../../components/contexts/MaterialsUpdateContext";
+import { MaterialsUpdateContext } from "../../components/contexts/materialsUpdateContext/MaterialsUpdateContext";
 
 const Materials = () => {
     const [materials, setMaterials] = useState([]);

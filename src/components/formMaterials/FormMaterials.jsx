@@ -2,6 +2,7 @@ import { Button, Box, DialogActions } from "@mui/material";
 import { Formik, Field, Form } from "formik";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
+import { getAuth } from "firebase/auth"
 import CustomForm from "../customForm/CustomForm";
 import validationSchema from "../../utils/validation/productSchema";
 
@@ -17,17 +18,30 @@ const initialValues = {
 const FormMaterials = ({ onClose, onAddOrder }) => {
 
     const handleSubmit = async (values, {resetForm}) => {
+        const auth = getAuth();
+        const user = auth.currentUser;
+
+        if (!user)  {
+            alert("Debes iniciar sesion para agregar un pedido");
+            return;
+        };
+
         try {
-            await addDoc(collection(db, "materials"), values);
-            console.log("Datos enviados a Firestore:", values);
+            await addDoc(collection(db, "materials"), {
+                ...values,
+                createBy: user.uid,
+                createByEmail: user.email,
+                createAt: new Date(),
+            });
+
+            console.log("Pedido agregado con exito por:", user.email);
             alert("Pedido agregado con exito");
+            onAddOrder();
             resetForm();
             onClose();
-            onAddOrder();
-            
         } catch (error) {
-            console.error("Error al enviar los datos a Firestore:", error);
-            alert("Ocurrio un error al agregar el pedido")
+            console.error("Error al agregar el pedido", error);
+            alert("Error" + error.message);
         }
     };
 

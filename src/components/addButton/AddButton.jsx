@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { MaterialsUpdateContext } from "../contexts/MaterialsUpdateContext"
+import { MaterialsUpdateContext } from "../contexts/materialsUpdateContext/MaterialsUpdateContext"
 import { Button, Dialog, DialogTitle, DialogContent } from "@mui/material";
 import FormMaterials from "../formMaterials/FormMaterials";
 
