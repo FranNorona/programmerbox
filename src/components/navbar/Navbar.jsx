@@ -1,58 +1,57 @@
-import { Link, useNavigate } from "react-router-dom";
-import PowerSettingsNewOutlinedIcon from '@mui/icons-material/PowerSettingsNewOutlined';
-import IconButton from "@mui/material/IconButton";
-import "./navbar.css";
+import { useState } from "react";
+import { Drawer, IconButton, AppBar, Toolbar} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import TodayIcon from '@mui/icons-material/Today';
+import navLinks from "../../utils/navLinks/navLinks.json";
+import NavListDrawer from "./NavListDrawer";
+import Seeker from "../seeker/Seeker";
+import AddButton from "../addButton/AddButton"
 
-const Navbar = ({ onLogout, loggedUser, expiredCount, activeCount}) => {
-    const navigate = useNavigate();
+const iconMap = {
+    PostAddIcon: <PostAddIcon />,
+    TodayIcon: <TodayIcon />,
+};
 
-    const handleLogout = () => {
-        onLogout();
-        navigate("/login");
-    };
+const navLinksWithIcons = navLinks.map((item) => ({
+    ...item,
+    icon: iconMap[item.icon],
+}));
 
-    const profilePics = {
-        Franco: import.meta.env.VITE_PIC_USER_1,
-        Gabriel: import.meta.env.VITE_PIC_USER_2,
-    };
-
-    const userRoles = {
-        Franco: "Analista de Planeamiento",
-        Gabriel: "Jefe de Planeamiento",
-    }
-
-    const defaultProfilePic = import.meta.env.VITE_PIC_DEFAULT;
-
-    const profilePicsUrl = profilePics[loggedUser] || defaultProfilePic;
-
-    const userRole = userRoles[loggedUser] || "Usuario";
+const NavBar = () => {
+    const [open, setOpen] = useState(false);
 
     return (
-        <div className="navbar_container">
+        <>
+            <AppBar position="fixed" sx={{ height: { xs: "80px", sm: "70px" },
+                        bgcolor: "primary", width:"100vw"}}>
+                <Toolbar sx={{
+                    width:"100%",
+                    height: "100%",
+                    display:"flex",
+                    justifyContent:"space-between",
+                    alignItems: "center",
+                    gap:"20px"
+                }}>
+                    <IconButton
+                        color="inherit"
+                        onClick={() => setOpen(true)}
+                    >
+                        <MenuIcon sx={{ fontSize: "30px", color: "white" }} />
+                    </IconButton>
+                    <Seeker />
+                    <AddButton />
+                </Toolbar>
+            </AppBar>
 
-            <div className="profile_container">
-                <img src={profilePicsUrl} alt={`${loggedUser} profile`} />
-                <div className="profile_info">
-                    <h3>{loggedUser}</h3>
-                    <h4>{userRole}</h4>
-                </div>  
-            </div>
-            
-            <div className="links_container">
-                <div className="options_container">
-                    <Link to="/" className="links">Pedidos</Link>
-                    <Link to="/granel" className="links">Graneles</Link>
-                </div>        
-                <div className="navbar_count_container">
-                    <div className="navbar_count">
-                        <div>{expiredCount} Vencidos</div>
-                        <div>{activeCount} Vigentes</div>
-                    </div> 
-                    <IconButton className="logout_button" onClick={handleLogout}><PowerSettingsNewOutlinedIcon /></IconButton>
-                </div>    
-            </div>
-        </div>
+            <Drawer
+                open={open}
+                anchor="left"
+                onClose={() => setOpen(false)}>
+                <NavListDrawer navLinks={navLinksWithIcons} />
+            </Drawer>
+        </>
     );
-}
+};
 
-export default Navbar;
+export default NavBar;

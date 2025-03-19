@@ -1,47 +1,15 @@
-import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Toaster } from 'sonner'
-import Layout from "./components/layout/Layout";
-import Login from "./pages/login/Login";
-import Orders from "./pages/orders/Orders";
-import Graneles from "./pages/graneles/Graneles";
-import GranelesDetail from "./pages/granelesDatail/GranelesDetail";
-import NotFound from "./components/notFound/NotFound";
-import "./index.css"
+import NavBar from "./components/navbar/Navbar";
+import Materials from "./pages/materials/Materials";
+import { MaterialsUpdateProvider } from "./components/contexts/MaterialsUpdateContext"; // Asegúrate de que este sea el path correcto
+import "./index.css";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loggedUser, setLoggedUser] = useState("");
-  const [expiredCount, setExpiredCount] = useState(0);
-  const [activeCount, setActiveCount] = useState(0);
-
-  const handleLoginSuccess = (userName) => {
-    setIsAuthenticated(true);
-    setLoggedUser(userName);
-};
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    setLoggedUser("");
-  };
-
   return (
-    <BrowserRouter>
-      <Toaster richColors position="top-center"/>
-      <Routes>
-        {isAuthenticated ? (
-          <Route element={<Layout onLogout={handleLogout} loggedUser={loggedUser} expiredCount={expiredCount} activeCount={activeCount}/>}>
-            <Route path="/" element={<Orders setExpiredCount={setExpiredCount} setActiveCount={setActiveCount} loggedUser={loggedUser}/>} />
-            <Route path="/granel" element={<NotFound />} />
-            <Route path="/graneles/:id" element={<GranelesDetail />} />
-          </Route>
-        ) : (
-          <Route path="/login" element={<Login onLogin={handleLoginSuccess} />} />
-        )}
-        <Route path="*" element={<Login onLogin={handleLoginSuccess} />} />
-      </Routes>
-    </BrowserRouter>
+    <MaterialsUpdateProvider>
+      <NavBar />
+      <Materials />
+    </MaterialsUpdateProvider>
   );
-};
+}
 
 export default App;

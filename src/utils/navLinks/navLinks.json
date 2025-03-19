@@ -1,0 +1,13 @@
+[
+    {
+      "title": "Materiales",
+      "path": "#materials",
+      "icon": "PostAddIcon"
+    },
+    {
+      "title": "Programación",
+      "path": "#programming",
+      "icon": "TodayIcon"
+    }
+  ]
+  
