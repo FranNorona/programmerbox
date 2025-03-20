@@ -21,7 +21,7 @@ const Auth = () => {
             }
         } catch (error) {
             console.error("Error de autenticacion:", error.message);
-            alert("Error: " + error.message)
+            alert(`Error: ${error.message}`);
         }
     };
 
