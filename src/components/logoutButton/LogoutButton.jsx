@@ -1,5 +1,6 @@
 import { getAuth, signOut } from "firebase/auth";
 import { Button } from "@mui/material";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const LogoutButton = () => {
     const handleLogout = async () => {
@@ -15,8 +16,9 @@ const LogoutButton = () => {
     };
 
     return (
-        <Button variant="contained" color="secondary" onClick={handleLogout}>
+        <Button className=" !w-[80%] !text-emerald-500 !text-xs !bg-[white]" variant="contained" onClick={handleLogout}>
             Cerrar Sesion
+            <LogoutIcon />
         </Button>
     );
 };

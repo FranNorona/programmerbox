@@ -23,7 +23,7 @@ const NavBar = () => {
 
     return (
         <>
-            <AppBar className="w-[100vw] !h-20 !sm:h-15 !bg-emerald-300">
+            <AppBar className="w-[100vw] !h-20 !sm:h-15 !bg-emerald-400">
                 <Toolbar className="w-[100vw] h-[100%] flex justify-between items-center">
                     <IconButton
                         color="inherit"
