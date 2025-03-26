@@ -36,9 +36,8 @@ const NavBar = () => {
                 </Toolbar>
             </AppBar>
 
-            <Drawer
+            <Drawer className="!h-[100vh] bg-stone-400"
                 open={open}
-                anchor="left"
                 onClose={() => setOpen(false)}>
                 <NavListDrawer navLinks={navLinksWithIcons} />
             </Drawer>

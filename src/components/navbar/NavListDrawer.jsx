@@ -7,7 +7,7 @@ import LogoutButton from "../logoutButton/LogoutButton";
 const NavListDrawer = ({ navLinks }) => {
   return (
     <Box className="flex flex-col items-center !w-42 text-[white] bg-emerald-400" sx={{height: "100vh"}}>
-      <nav className="flex flex-col items-center justify-between h-[100vh] !p-2">
+      <nav className="flex flex-col items-center justify-between !h-[100vh] !p-2">
         <List>
           {navLinks.map((item) => (
             <ListItem disablePadding key={item.title}>
