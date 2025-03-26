@@ -23,16 +23,8 @@ const NavBar = () => {
 
     return (
         <>
-            <AppBar position="fixed" sx={{ height: { xs: "80px", sm: "70px" },
-                        bgcolor: "primary", width:"100vw"}}>
-                <Toolbar sx={{
-                    width:"100%",
-                    height: "100%",
-                    display:"flex",
-                    justifyContent:"space-between",
-                    alignItems: "center",
-                    gap:"20px"
-                }}>
+            <AppBar className="w-[100vw] !h-20 !sm:h-15 !bg-emerald-300">
+                <Toolbar className="w-[100vw] h-[100%] flex justify-between items-center">
                     <IconButton
                         color="inherit"
                         onClick={() => setOpen(true)}

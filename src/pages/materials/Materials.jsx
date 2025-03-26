@@ -26,7 +26,7 @@ const Materials = () => {
     }, [updateTrigger]);
 
     return (
-        <Box sx={{ width:"100vw", height:"auto", marginTop: "80px", padding:"20px"}}>
+        <Box className="w-[100vw] sm:w-[100vw] !h-dvh !pt-25 !p-4">
             {materials.length > 0 ? (
                 materials.map(material => (
                     <Box key={material.id} 
@@ -39,7 +39,7 @@ const Materials = () => {
                         <p>{material.provider}</p>
                         <p>Fecha Solicitada: {material.dateAnnoun}</p>
                         <p>Fecha Requerida: {material.dateRequest}</p>
-                        <p>{material.comments}</p>
+                        <p>{material.comments.length > 0 ? ("Comentario: " + material.comments) : ("")}</p>      
                     </Box>
                 ))
             ) : (

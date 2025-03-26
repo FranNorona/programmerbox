@@ -53,18 +53,18 @@ const FormMaterials = ({ onClose, onAddOrder }) => {
         >
             {({ errors, touched }) => (
                 <Form>
-                    <Box sx={{p: 3, display: "flex", flexDirection: "column", gap: 2 }}>
+                    <Box className="flex flex-col gap-2">
                         <Field name="code" label="Código" component={CustomForm} />
                         <Field name="description" label="Descripción" component={CustomForm} />
                         <Field name="provider" label="Proveedor" component={CustomForm} />
                         <Field name="dateAnnoun" label="Fecha Solicitada" type="date" component={CustomForm} InputLabelProps={{ shrink: true }} />
                         <Field name="dateRequest" label="Fecha Requerida" type="date" component={CustomForm} InputLabelProps={{ shrink: true }} />
                         <Field name="comments" label="Comentarios" multiline rows={4} component={CustomForm} />
-                        <DialogActions>
-                            <Button type="submit" variant="contained" color="primary">
+                        <DialogActions className="flex !justify-around">
+                            <Button className="h-12 !bg-emerald-500" type="submit" variant="contained" color="primary">
                                 Agregar
                             </Button>
-                            <Button type="button" variant="contained" color="primary" onClick={onClose}>
+                            <Button className="h-12 !bg-emerald-500" type="button" variant="contained" color="primary" onClick={onClose}>
                                 Cancelar
                             </Button>
                         </DialogActions>

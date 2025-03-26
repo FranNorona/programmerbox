@@ -26,13 +26,13 @@ const Auth = () => {
     };
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, maxWidth: "400", margin: "auto" }}>
-            <TextField label="Correo electronico" value={email} onChange={(e) => setEmail(e.target.value)}>   
+        <Box className="flex flex-col justify-center items-center !pt-15 gap-4">
+            <TextField className="w-[80%]" label="Correo electronico" value={email} onChange={(e) => setEmail(e.target.value)}>   
             </TextField>
 
-            <TextField label="Contraseña" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></TextField>
+            <TextField className="w-[80%]" label="Contraseña" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></TextField>
 
-            <Button variant="contained" onClick={handleAuth}>
+            <Button className="!bg-emerald-500 !w-[80%]" variant="contained" onClick={handleAuth}>
                 {isLogin ? "Iniciar Sesion" : "Registrarse"}
             </Button>
 

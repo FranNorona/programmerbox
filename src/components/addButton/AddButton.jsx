@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { MaterialsUpdateContext } from "../contexts/materialsUpdateContext/MaterialsUpdateContext"
 import { Button, Dialog, DialogTitle, DialogContent } from "@mui/material";
 import FormMaterials from "../formMaterials/FormMaterials";
+import AddIcon from '@mui/icons-material/Add';
 
 const AddButton = () => {
     const [openForm, setOpenForm] = useState(false);
@@ -19,10 +20,9 @@ const AddButton = () => {
         <>
             <Button
                 variant="contained"
-                sx={{ height: '50px', bgcolor: "white", color: "#1976D2" }}
                 onClick={handleOpenForm}
-            >
-                Agregar Pedido
+            className="h-13.5 !bg-[white] !text-emerald-500">
+                <AddIcon />
             </Button>
             <Dialog open={openForm} onClose={handleCloseForm} sx={{
                     '& .MuiDialog-container': {
@@ -30,11 +30,11 @@ const AddButton = () => {
                         justifyContent: 'center',
                     },
                     '& .MuiDialog-paper': {
-                        width: '50%',
+                        width: '100%',
                         maxWidth: '70%',
                     }
                 }}>
-                <DialogTitle>Ingresar Datos del Pedido</DialogTitle>
+                <DialogTitle className="text-center">Ingresar Datos del Pedido</DialogTitle>
                 <DialogContent>
                     <FormMaterials onClose={handleCloseForm} onAddOrder={triggerUpdate} />
                 </DialogContent>
