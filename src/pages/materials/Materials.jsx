@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
-import {Box} from "@mui/material";
+import { Box } from "@mui/material";
 import { MaterialsUpdateContext } from "../../components/contexts/materialsUpdateContext/MaterialsUpdateContext";
-import DeleteIcon from '@mui/icons-material/Delete';
-import SyncAltIcon from '@mui/icons-material/SyncAlt';
+import DeleteButton from "../../components/deleteButton/DeleteButton";
+import UpdateButton from "../../components/updateButton/UpdateButton";
 
 const Materials = () => {
     const [materials, setMaterials] = useState([]);
@@ -42,11 +42,11 @@ const Materials = () => {
                                 <p>{material.provider}</p>
                                 <p>Fecha Solicitada: {material.dateAnnoun}</p>
                                 <p>Fecha Requerida: {material.dateRequest}</p>
-                                <p>{material.comments.length > 0 ? ("Comentario: " + material.comments) : ("")}</p>      
+                                <p>{material.comments.length > 0 && ("Comentario: " + material.comments)}</p>      
                             </div>
                             <div>
-                                <button><DeleteIcon /></button>
-                                <button><SyncAltIcon /></button>
+                                <DeleteButton docId={material.id}/>
+                                <UpdateButton docId={material.id}/>
                             </div>
                      </Box>
                 ))

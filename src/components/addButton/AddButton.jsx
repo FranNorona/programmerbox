@@ -21,7 +21,7 @@ const AddButton = () => {
             <Button
                 variant="contained"
                 onClick={handleOpenForm}
-            className="h-13.5 !bg-[white] !text-emerald-500">
+                className="h-13.5 !bg-[white] !text-emerald-500">
                 <AddIcon />
             </Button>
             <Dialog open={openForm} onClose={handleCloseForm} sx={{
